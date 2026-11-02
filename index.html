@@ -263,6 +263,14 @@
   .svg-o{fill:var(--svg-ink)}
   .svg-pos{fill:var(--muted)}
   .svg-barre{fill:var(--green)}
+
+  /* ===== 音频播放按钮 ===== */
+  .play-btn{
+    display:inline-block;background:var(--green);color:#fff;border:none;
+    padding:6px 14px;border-radius:8px;font-size:13.5px;cursor:pointer;
+    margin:4px 6px 4px 0;
+  }
+  .play-btn:hover{opacity:.9}
 </style>
 </head>
 <body>
@@ -360,6 +368,7 @@
         <tr><td>全</td><td>全</td><td><b>半</b></td><td>全</td><td>全</td><td>全</td><td><b>半</b></td></tr>
       </table>
       <div class="note">这是博主反复强调的<b>底层逻辑</b>。只要会这个公式，任何调的音阶你都能自己推出来，不用背。</div>
+      <button class="play-btn" onclick="playScale()">▶ 播放 C 大调音阶</button>
     </div>
   </details>
 
@@ -401,6 +410,8 @@
         <tr><td>减三和弦</td><td>根音+小三度+小三度</td><td>Bdim＝B D F</td><td>紧张、不稳定</td></tr>
       </table>
       <div class="note">大调里的 1、4、5 级是大三和弦，2、3、6 级是小三和弦，7 级是减三和弦。这就是后面「和弦级数」的由来。</div>
+      <button class="play-btn" onclick="playChord('C')">▶ 大三和弦 C</button>
+      <button class="play-btn" onclick="playChord('Am')">▶ 小三和弦 Am</button>
     </div>
   </details>
 
@@ -1158,7 +1169,7 @@ function chordSVG(name, data){
     svg += `<rect class="svg-barre" x="${leftPad-6}" y="${y-8}" width="${5*strW+12}" height="16" rx="8" opacity="0.9"/>`;
   }
   svg += `</svg>`;
-  return `<div class="chord-card">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
+  return `<div class="chord-card" onclick="playChord('${name}')" title="点击听声音" style="cursor:pointer">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
 }
 
 /* 基础和弦 */
@@ -1213,6 +1224,80 @@ function resetChecklist(){
   if(!confirm('确定清空所有练习进度吗？')) return;
   checklistItems.forEach((_,i)=>localStorage.removeItem('guitar-check-'+i));
   location.reload();
+}
+
+/* ===== 音频：Web Audio 合成吉他音 ===== */
+let audioCtx = null;
+function getCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  return audioCtx;
+}
+// 六根弦空弦频率（6弦→1弦）：E2 A2 D3 G3 B3 E4
+const openFreqs = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63];
+// Karplus-Strong 拨弦合成（模拟吉他弦音）
+function pluck(freq, when){
+  const ctx = getCtx();
+  const t = ctx.currentTime + (when||0);
+  const out = ctx.createGain();
+  out.gain.setValueAtTime(0.5, t);
+  out.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
+  out.connect(ctx.destination);
+
+  const delay = ctx.createDelay(1);
+  delay.delayTime.value = 1/freq;
+
+  const lp = ctx.createBiquadFilter();
+  lp.type = 'lowpass';
+  lp.frequency.value = Math.min(freq*6, 6000);
+  lp.Q.value = 0.5;
+
+  const fb = ctx.createGain();
+  fb.gain.value = 0.96;
+
+  delay.connect(lp);
+  lp.connect(fb);
+  fb.connect(delay);
+  lp.connect(out);
+
+  const nb = ctx.createBuffer(1, Math.floor(ctx.sampleRate*0.02), ctx.sampleRate);
+  const d = nb.getChannelData(0);
+  for(let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+  const noise = ctx.createBufferSource();
+  noise.buffer = nb;
+  noise.connect(delay);
+  noise.start(t);
+}
+// 播放和弦（琶音，从低音到高音）
+function playChord(name){
+  const data = chords[name];
+  if(!data) return;
+  const notes = [];
+  for(let s=0;s<6;s++){
+    const c = data.frets[s];
+    if(c==='x') continue;
+    notes.push(c==='0' ? openFreqs[s] : openFreqs[s]*Math.pow(2, Number(c)/12));
+  }
+  notes.forEach((f,i)=>pluck(f, i*0.14));
+}
+// 播放 C 大调音阶
+function playScale(){
+  const scale = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+  scale.forEach((f,i)=>pluck(f, i*0.3));
+}
+// 播放节拍器
+function playMetronome(){
+  const ctx = getCtx();
+  for(let i=0;i<8;i++){
+    const t = ctx.currentTime + i*0.5;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.frequency.value = i===0 ? 1000 : 800;
+    g.gain.setValueAtTime(i===0?0.5:0.3, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+0.08);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(t); o.stop(t+0.09);
+  }
 }
 </script>
 </body>

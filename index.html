@@ -5,21 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>零基础吉他自学教程 · 从脱谱到自由弹唱</title>
 <style>
-  :root{
-    --bg:#f6f3ec;
+  :root, [data-theme="light"]{
+    --bg:#f3f8f6;
     --card:#ffffff;
-    --ink:#2b2b2b;
-    --muted:#6b6b6b;
-    --line:#e5dfd3;
-    --green:#3e6b4f;
-    --green-dark:#2f5340;
-    --orange:#d98a3d;
-    --orange-soft:#f7e8d6;
-    --sidebar:#26332c;
-    --sidebar-ink:#d9e2dc;
-    --code-bg:#f0ece2;
+    --ink:#1f2b27;
+    --muted:#64756f;
+    --line:#d9e6e1;
+    --green:#2a9d8f;
+    --green-dark:#1f7a6f;
+    --orange:#35b779;
+    --orange-soft:#e2f4ec;
+    --sidebar:#1f3a34;
+    --sidebar-ink:#d7e6e1;
+    --sidebar-sub:#8fb0a4;
+    --sidebar-hint:#7c948b;
+    --code-bg:#edf4f1;
+    --note-bg:#e7f2ee;
+    --table-head:#e9f1ee;
+    --table-alt:#f5faf8;
+    --table-bg:#ffffff;
+    --checklist-bg:#ffffff;
+    --accent-text:#1f7a6f;
+    --btn-bg:#e9f1ee;
+    --svg-line:#4a5a54;
+    --svg-ink:#3a4a44;
+    --svg-mute:#c0392b;
     --radius:12px;
     --shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.05);
+  }
+  [data-theme="dark"]{
+    --bg:#12161a;
+    --card:#1d232b;
+    --ink:#dce3e0;
+    --muted:#8a9691;
+    --line:#2c3540;
+    --green:#4ecb8d;
+    --green-dark:#3aad74;
+    --orange:#f0a04b;
+    --orange-soft:#2c2a1e;
+    --sidebar:#0e1216;
+    --sidebar-ink:#b9c6c0;
+    --sidebar-sub:#6f7f78;
+    --sidebar-hint:#5f6f68;
+    --code-bg:#262d36;
+    --note-bg:#1f2a26;
+    --table-head:#262d36;
+    --table-alt:#212932;
+    --table-bg:#1d232b;
+    --checklist-bg:#1d232b;
+    --accent-text:#f0a04b;
+    --btn-bg:#2c3540;
+    --svg-line:#8b98a0;
+    --svg-ink:#b9c6c0;
+    --svg-mute:#e06c5a;
+    --radius:12px;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.35);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -50,7 +90,7 @@
     margin:0 0 4px;letter-spacing:.5px;
   }
   .sidebar .logo em{color:var(--orange);font-style:normal}
-  .sidebar .sub{font-size:12.5px;color:#9fb0a6;margin:0 0 22px}
+  .sidebar .sub{font-size:12.5px;color:var(--sidebar-sub);margin:0 0 22px}
   .sidebar nav a{
     display:block;
     color:var(--sidebar-ink);
@@ -68,7 +108,7 @@
     margin:20px 0 6px;padding-left:10px;
   }
   .sidebar .hint{
-    margin-top:30px;font-size:12px;color:#7c8f84;
+    margin-top:30px;font-size:12px;color:var(--sidebar-hint);
     border-top:1px solid rgba(255,255,255,.12);padding-top:16px;
   }
 
@@ -161,9 +201,9 @@
     padding:10px 16px;border-radius:0 8px 8px 0;margin:14px 0;
     font-size:14.5px;
   }
-  .callout b{color:#a05f1f}
+  .callout b{color:var(--accent-text)}
   .note{
-    background:#eef3ef;border-left:4px solid var(--green);
+    background:var(--note-bg);border-left:4px solid var(--green);
     padding:10px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14.5px;
   }
   code,.mono{
@@ -173,11 +213,11 @@
 
   table{
     border-collapse:collapse;width:100%;margin:12px 0;font-size:14.5px;
-    background:#fff;
+    background:var(--table-bg);
   }
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}
-  th{background:#f0ece2;font-weight:600}
-  tr:nth-child(even) td{background:#faf8f3}
+  th{background:var(--table-head);font-weight:600}
+  tr:nth-child(even) td{background:var(--table-alt)}
 
   /* ===== 和弦图 ===== */
   .chord-grid{
@@ -194,7 +234,7 @@
   .checklist li{
     display:flex;align-items:flex-start;gap:10px;
     padding:10px 14px;border:1px solid var(--line);border-radius:10px;
-    margin:8px 0;background:#fff;font-size:14.5px;
+    margin:8px 0;background:var(--checklist-bg);font-size:14.5px;
   }
   .checklist input{margin-top:4px;width:18px;height:18px;accent-color:var(--green)}
   .checklist .done{text-decoration:line-through;color:var(--muted)}
@@ -203,6 +243,26 @@
     margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
     color:var(--muted);font-size:13px;
   }
+
+  /* ===== 主题切换按钮 ===== */
+  .theme-btn{
+    position:fixed;right:20px;bottom:20px;z-index:100;
+    background:var(--green);color:#fff;border:none;
+    padding:10px 18px;border-radius:24px;font-size:14px;cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,.28);
+    transition:transform .15s;
+  }
+  .theme-btn:hover{transform:translateY(-2px)}
+
+  /* ===== 和弦图 SVG 颜色（随主题变化）===== */
+  .svg-line{stroke:var(--svg-line)}
+  .svg-fret{stroke:var(--svg-line)}
+  .svg-dot{fill:var(--green)}
+  .svg-finger{fill:#fff}
+  .svg-x{fill:var(--svg-mute)}
+  .svg-o{fill:var(--svg-ink)}
+  .svg-pos{fill:var(--muted)}
+  .svg-barre{fill:var(--green)}
 </style>
 </head>
 <body>
@@ -218,6 +278,8 @@
     → 脱谱 · 脱离三品 · 任意调
   </div>
 </aside>
+
+<button class="theme-btn" id="theme-btn" onclick="toggleTheme()">🌙 深色</button>
 
 <main class="main" id="main">
 
@@ -460,6 +522,26 @@
         <li>五个形状把整个指板「拼满」，所以叫 CAGED。</li>
       </ul>
       <div class="callout">掌握 CAGED ＝ <b>全指板任意和弦</b>。这是「脱离三品战士」「不再依赖变调夹」的钥匙。</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="tag">图解</span>CAGED 五形状详解<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>CAGED 的五个「形状」，就是 <b>C、A、G、E、D</b> 五个开放和弦的手型。把每个手型<b>整体往高把位平移</b>，用食指横按补上原来的空弦，就能在任意位置得到任意和弦。</p>
+      <h4>五个形状一览</h4>
+      <div class="chord-grid" id="caged-grid"></div>
+      <h4>每个形状的根音在哪（移动形状的关键）</h4>
+      <table>
+        <tr><th>形状</th><th>根音位置</th><th>上移 2 品变成</th></tr>
+        <tr><td><b>C 形状</b></td><td>5 弦 3 品、2 弦 1 品（都是 C）</td><td>D（横按 2 品）</td></tr>
+        <tr><td><b>A 形状</b></td><td>5 弦空弦、3 弦 2 品（都是 A）</td><td>B（横按 2 品）</td></tr>
+        <tr><td><b>G 形状</b></td><td>6 弦 3 品、3 弦空弦、1 弦 3 品（都是 G）</td><td>A（横按 2 品）</td></tr>
+        <tr><td><b>E 形状</b></td><td>6 弦空弦、4 弦 2 品、1 弦空弦（都是 E）</td><td>F#（横按 2 品；E 形状上移 1 品＝F）</td></tr>
+        <tr><td><b>D 形状</b></td><td>4 弦空弦、2 弦 3 品（都是 D）</td><td>E（横按 2 品）</td></tr>
+      </table>
+      <div class="note">规律：<b>根音在哪根弦，就把那个形状当「模板」在指板上滑动</b>。比如你要在 5 弦 5 品弹 D，就用「根音在 5 弦」的 C 形状（或 A 形状）平移过去。</div>
+      <div class="callout">练法：拿 C 和弦，分别用 C、A、G、E、D 五个形状在指板不同位置弹出来——你会发现它们是同一个 C，只是音色/把位不同。这就打通了全指板。</div>
     </div>
   </details>
 
@@ -910,11 +992,36 @@
   </details>
 
   <details class="card" open>
+    <summary><span class="tag">图表</span>常用节奏型图解<span class="arrow">▶</span></summary>
+    <div class="body">
+      <h4>分解节奏型（数字＝弦号）</h4>
+      <table>
+        <tr><th>名称</th><th>弹法</th><th>适用</th></tr>
+        <tr><td>经典 53231323</td><td class="mono">5-3-2-3-1-3-2-3</td><td>根音在 5 弦（C、Am 等）</td></tr>
+        <tr><td>低音版 632123</td><td class="mono">6-3-2-1-2-3</td><td>根音在 6 弦（G、E 等）</td></tr>
+        <tr><td>万能 T1213121</td><td class="mono">T-1-2-1-3-1-2-1</td><td>T=根音弦，最常用</td></tr>
+      </table>
+      <h4>扫弦节奏型（4/4 拍，↓下扫 ↑上扫，粗体＝重音）</h4>
+      <table>
+        <tr><th>风格</th><th>节奏型</th><th>拍子</th></tr>
+        <tr><td>基础</td><td class="mono"><b>↓</b> ↓ ↓ ↓</td><td>每拍一下</td></tr>
+        <tr><td>流行</td><td class="mono"><b>↓</b> ↓↑ ↑↓↑</td><td>最常用</td></tr>
+        <tr><td>民谣</td><td class="mono"><b>↓</b> ↓↑ ↓ ↓↑</td><td>舒缓</td></tr>
+        <tr><td>摇滚</td><td class="mono"><b>↓</b>↑ ↓↑ ↓↑ ↓↑</td><td>每拍上下</td></tr>
+        <tr><td>切分</td><td class="mono"><b>↓</b> ↑↓ ↑ ↓ ↑</td><td>律动感强</td></tr>
+      </table>
+      <h4>6/8 拍扫弦</h4>
+      <p class="mono"><b>↓</b> ↓↑ ↓ ↓↑</p>
+      <div class="note">记住：<b>第 1 拍永远是重音，重音下扫</b>。跟着鼓点（底鼓）走，节奏才稳。</div>
+    </div>
+  </details>
+
+  <details class="card" open>
     <summary><span class="tag">图表</span>练习打卡清单<span class="arrow">▶</span></summary>
     <div class="body">
       <p>每天 30–60 分钟，按阶段推进。打勾记录进度（保存在浏览器本地）。</p>
       <ul class="checklist" id="checklist"></ul>
-      <button onclick="resetChecklist()" style="background:#eee;border:1px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;">清空进度</button>
+      <button onclick="resetChecklist()" style="background:var(--btn-bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;">清空进度</button>
     </div>
   </details>
 </section>
@@ -928,6 +1035,24 @@
 </main>
 
 <script>
+/* ===== 主题切换 ===== */
+(function(){
+  const saved = localStorage.getItem('guitar-theme');
+  document.documentElement.setAttribute('data-theme', saved==='dark'?'dark':'light');
+  updateThemeBtn();
+})();
+function updateThemeBtn(){
+  const t = document.documentElement.getAttribute('data-theme')||'light';
+  document.getElementById('theme-btn').textContent = t==='light' ? '🌙 深色' : '☀️ 浅色';
+}
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme')||'light';
+  const next = cur==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('guitar-theme', next);
+  updateThemeBtn();
+}
+
 /* ===== 侧边导航自动生成 ===== */
 const parts = [
   {id:"part-1", title:"一、乐理篇 · 底层逻辑"},
@@ -976,6 +1101,16 @@ const chords = {
   'B7':  {frets:'x21202', fingers:[0,2,1,3,0,4]},
   'Fmaj7':{frets:'xx3210', fingers:[0,0,3,2,1,0]},
   'Am7': {frets:'x02010', fingers:[0,2,0,1,0,0]},
+  'E7':  {frets:'020100', fingers:[0,2,0,1,0,0]},
+  'A7':  {frets:'x02020', fingers:[0,2,0,2,0,0]},
+  'Em7': {frets:'022030', fingers:[0,2,3,0,4,0]},
+  'Dm7': {frets:'xx0211', fingers:[0,0,0,2,1,1]},
+  'Bm7': {frets:'x24232', fingers:[0,1,4,1,3,1], barre:2},
+  'Gm':  {frets:'355333', fingers:[1,3,4,1,1,1], barre:3},
+  'Bb':  {frets:'x13331', fingers:[0,1,3,4,3,1], barre:1},
+  'F#m': {frets:'244222', fingers:[1,4,3,1,1,1], barre:2},
+  'Cm':  {frets:'x35543', fingers:[0,1,4,3,2,1], barre:3},
+  'G#m': {frets:'466444', fingers:[1,4,3,1,1,1], barre:4},
 };
 
 /* 渲染一个和弦图 SVG */
@@ -987,46 +1122,40 @@ function chordSVG(name, data){
   const maxFret = Math.max(...[...frets].filter(c=>c!=='x'&&c!=='0').map(Number), 1);
   const fretCount = Math.max(4, maxFret);
   let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
-  // 弦（竖线）
   for(let s=0;s<6;s++){
     const x = leftPad + s*strW;
-    svg += `<line x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+fretH*fretCount}" stroke="#444" stroke-width="${s>=3?1.4:2}"/>`;
+    svg += `<line class="svg-line" x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+fretH*fretCount}" stroke-width="${s>=3?1.4:2}"/>`;
   }
-  // 品丝（横线）
   for(let f=0;f<=fretCount;f++){
     const y = topPad + f*fretH;
-    svg += `<line x1="${leftPad}" y1="${y}" x2="${leftPad+5*strW}" y2="${y}" stroke="#444" stroke-width="${f===0?4:1.2}"/>`;
+    svg += `<line class="svg-fret" x1="${leftPad}" y1="${y}" x2="${leftPad+5*strW}" y2="${y}" stroke-width="${f===0?4:1.2}"/>`;
   }
-  // 把位标注
   if(maxFret>1){
-    svg += `<text x="${leftPad-12}" y="${topPad+fretH*0.5+4}" font-size="11" fill="#666">${maxFret}品</text>`;
+    svg += `<text class="svg-pos" x="${leftPad-12}" y="${topPad+fretH*0.5+4}" font-size="11">${maxFret}品</text>`;
   }
-  // 空弦/不弹标记
   for(let s=0;s<6;s++){
     const c = frets[s];
     const x = leftPad + s*strW;
     if(c==='x'){
-      svg += `<text x="${x}" y="${topPad-8}" font-size="12" fill="#c0392b" text-anchor="middle">×</text>`;
+      svg += `<text class="svg-x" x="${x}" y="${topPad-8}" font-size="12" text-anchor="middle">×</text>`;
     } else if(c==='0'){
-      svg += `<text x="${x}" y="${topPad-8}" font-size="13" fill="#444" text-anchor="middle">○</text>`;
+      svg += `<text class="svg-o" x="${x}" y="${topPad-8}" font-size="13" text-anchor="middle">○</text>`;
     }
   }
-  // 按弦圆点
   for(let s=0;s<6;s++){
     const c = frets[s];
     if(c==='x'||c==='0') continue;
     const n = Number(c);
     const x = leftPad + s*strW;
     const y = topPad + (n-0.5)*fretH;
-    svg += `<circle cx="${x}" cy="${y}" r="8" fill="#3e6b4f"/>`;
+    svg += `<circle class="svg-dot" cx="${x}" cy="${y}" r="8"/>`;
     if(data.fingers && data.fingers[s]){
-      svg += `<text x="${x}" y="${y+4}" font-size="11" fill="#fff" text-anchor="middle">${data.fingers[s]}</text>`;
+      svg += `<text class="svg-finger" x="${x}" y="${y+4}" font-size="11" text-anchor="middle">${data.fingers[s]}</text>`;
     }
   }
-  // 横按
   if(data.barre){
     const y = topPad + (data.barre-0.5)*fretH;
-    svg += `<rect x="${leftPad-6}" y="${y-8}" width="${5*strW+12}" height="16" rx="8" fill="#3e6b4f" opacity="0.9"/>`;
+    svg += `<rect class="svg-barre" x="${leftPad-6}" y="${y-8}" width="${5*strW+12}" height="16" rx="8" opacity="0.9"/>`;
   }
   svg += `</svg>`;
   return `<div class="chord-card">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
@@ -1035,6 +1164,8 @@ function chordSVG(name, data){
 /* 基础和弦 */
 const basic = ['C','G','Am','Em','F','Dm','E','A','D'];
 document.getElementById('chord-basic').innerHTML = basic.map(n=>chordSVG(n, chords[n])).join('');
+/* CAGED 五形状 */
+document.getElementById('caged-grid').innerHTML = ['C','A','G','E','D'].map(n=>chordSVG(n, chords[n])).join('');
 /* 全部和弦 */
 document.getElementById('chord-all').innerHTML = Object.keys(chords).map(n=>chordSVG(n, chords[n])).join('');
 

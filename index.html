@@ -264,13 +264,34 @@
   .svg-pos{fill:var(--muted)}
   .svg-barre{fill:var(--green)}
 
-  /* ===== 音频播放按钮 ===== */
-  .play-btn{
-    display:inline-block;background:var(--green);color:#fff;border:none;
-    padding:6px 14px;border-radius:8px;font-size:13.5px;cursor:pointer;
-    margin:4px 6px 4px 0;
+  /* ===== 曲谱 ===== */
+  .song-card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px 20px;margin:16px 0;
   }
-  .play-btn:hover{opacity:.9}
+  .song-card h4{margin:0 0 4px;color:var(--green-dark);font-size:17px}
+  .song-card .meta{font-size:13px;color:var(--muted);margin:0 0 12px}
+  .svg-note{fill:var(--ink);font-weight:700}
+  .note-active{fill:var(--orange);font-weight:700}
+  .anim-btn{
+    display:inline-block;background:var(--orange);color:#fff;border:none;
+    padding:6px 14px;border-radius:8px;font-size:13.5px;cursor:pointer;
+    margin:8px 6px 4px 0;
+  }
+  .anim-btn:hover{opacity:.9}
+  .chord-sheet{display:flex;flex-wrap:wrap;gap:14px;margin:12px 0}
+  .rhythm-box{
+    background:var(--note-bg);border-left:4px solid var(--orange);
+    padding:10px 16px;border-radius:0 8px 8px 0;margin:12px 0;
+  }
+  .rhythm-tag{
+    font-size:12px;color:#fff;background:var(--green);
+    border-radius:6px;padding:2px 8px;margin-left:6px;
+  }
+  .video-box{
+    border:2px dashed var(--line);border-radius:var(--radius);
+    padding:22px;margin:16px 0;text-align:center;color:var(--muted);font-size:14px;
+  }
 </style>
 </head>
 <body>
@@ -319,42 +340,49 @@
   <details class="card" open>
     <summary><span class="tag">基础</span>十二平均律：音乐的地基<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>把一个八度（比如 <code>do</code> 到高音 <code>do</code>）<b>平均分成 12 等份</b>，每一份就是一个「半音」。这是现代音乐体系的根基。</p>
+      <p>我们把一个八度（比如 <code>do</code> 到高音 <code>do</code>，听起来是「同一个音、只是更高」）<b>平均切成 12 等份</b>，每一份叫一个「<b>半音</b>」。这是现代音乐几乎所有乐器的共同标准。</p>
+      <h4>为什么是 12 份？</h4>
+      <p>因为 12 个半音能近似满足八度、纯五度等自然泛音关系，让<b>转调</b>成为可能。你暂时不用深究原理，只需记住：<b>一个八度 ＝ 12 个半音</b>。</p>
+      <h4>在不同乐器上</h4>
       <ul>
-        <li>钢琴上：相邻两个键（黑键白键都算）＝ 1 个半音。</li>
-        <li>吉他上：相邻两个品 ＝ 1 个半音。</li>
-        <li>两个半音 ＝ 1 个全音。</li>
+        <li>🎹 钢琴：相邻两个键（黑键白键都算）＝ 1 个半音。</li>
+        <li>🎸 吉他：相邻两个品 ＝ 1 个半音。</li>
+        <li>两个半音 ＝ 1 个<b>全音</b>。</li>
       </ul>
-      <div class="note">记住这条换算就够了：<b>吉他一格＝半音，两格＝全音</b>。后面所有音阶、和弦、转调都建立在这上面。</div>
+      <div class="callout"><b>吉他一格＝半音，两格＝全音。</b>这句话是后面所有音阶、和弦、转调的根基，先刻进脑子里。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">基础</span>音名与唱名<span class="arrow">▶</span></summary>
     <div class="body">
+      <p>同一个音有两种叫法，别搞混：</p>
       <ul>
-        <li><b>音名</b>（固定的名字）：C D E F G A B</li>
-        <li><b>唱名</b>（唱出来的音）：do re mi fa sol la si</li>
-        <li>音名是<b>绝对</b>的（C 永远是那个音）；唱名是<b>相对</b>的（do 会跟着调走，后面讲首调会用到）。</li>
+        <li><b>音名</b>（绝对的名字，固定不变）：<code>C D E F G A B</code>，用 <code>#</code>（升）<code>b</code>（降）表示半音。</li>
+        <li><b>唱名</b>（唱出来的声音）：<code>do re mi fa sol la si</code>。</li>
       </ul>
       <table>
         <tr><th>音名</th><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>A</td><td>B</td></tr>
         <tr><th>唱名</th><td>do</td><td>re</td><td>mi</td><td>fa</td><td>sol</td><td>la</td><td>si</td></tr>
         <tr><th>简谱</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr>
       </table>
+      <div class="note">关键区别：<b>音名是绝对的</b>（C 永远是那个音），<b>唱名是相对的</b>（do 会跟着调移动）。后面讲「首调」和「转调」全靠这个区分。</div>
+      <h4>半音怎么表示</h4>
+      <p><code>#</code> 升半音（如 C# 是 C、D 中间那个音），<code>b</code> 降半音（如 Bb 是 A、B 中间那个音）。<b>C# 和 Db 其实是同一个音</b>，只是叫法不同。</p>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">基础</span>全音与半音（全半关系）<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>自然音阶里，不是所有相邻音之间都一样远：</p>
+      <p>自然音阶（C D E F G A B）里，相邻音之间的距离<b>不是都一样</b>：</p>
       <ul>
-        <li><b>E-F 之间是半音</b></li>
+        <li><b>E-F 之间是半音</b>（紧挨着，中间没有别的音）</li>
         <li><b>B-C 之间是半音</b></li>
-        <li>其余相邻音（C-D、D-E、F-G、G-A、A-B）都是<b>全音</b></li>
+        <li>其余相邻音（C-D、D-E、F-G、G-A、A-B）都是<b>全音</b>（中间隔了一个音）</li>
       </ul>
-      <div class="callout">这就是为什么 C 大调在钢琴上全是白键——因为它刚好绕开了所有黑键（半音）。记住 E-F 和 B-C 这两对「天然的半音」。</div>
+      <div class="callout">这就是为什么 C 大调在钢琴上<b>全是白键</b>——它刚好绕开了所有黑键。记住 <b>E-F 和 B-C 这两对「天然的半音」</b>就够了。</div>
+      <div class="note">换个记法：<b>除了「3-4」（mi-fa）和「7-1」（si-do）之间是半音，其余相邻唱名之间都是全音。</b></div>
     </div>
   </details>
 
@@ -367,23 +395,28 @@
         <tr><td>C→D</td><td>D→E</td><td>E→F</td><td>F→G</td><td>G→A</td><td>A→B</td><td>B→C</td></tr>
         <tr><td>全</td><td>全</td><td><b>半</b></td><td>全</td><td>全</td><td>全</td><td><b>半</b></td></tr>
       </table>
-      <div class="note">这是博主反复强调的<b>底层逻辑</b>。只要会这个公式，任何调的音阶你都能自己推出来，不用背。</div>
-      <button class="play-btn" onclick="playScale()">▶ 播放 C 大调音阶</button>
+      <h4>图解</h4>
+      <div id="semitone-chart"></div>
+      <h4>为什么它这么重要</h4>
+      <p>这是整套体系<b>最重要的底层逻辑</b>。只要会这个公式，<b>任何调的音阶你都能自己推出来</b>，不用背。比如要推 G 大调：从 G 出发，全全半全全全半走一遍，就是 G A B C D E F# G（注意 F 要升）。</p>
+      <div class="callout">练习：自己从 D 出发，按公式推一遍 D 大调，看哪里需要升号。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">核心</span>音程 与「上五下四」<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>两个音之间的距离叫<b>音程</b>，用「度」来数（数两个音之间包含几个音名）。</p>
+      <p>两个音之间的距离叫<b>音程</b>，用「度」来数——数两个音之间<b>包含几个音名</b>。</p>
+      <p>例：C 到 G，数 C(1) D(2) E(3) F(4) G(5)，所以是<b>五度</b>；C 到 E，数 C(1) D(2) E(3)，是<b>三度</b>。</p>
       <h4>常见音程</h4>
       <ul>
         <li>纯一度、大二度、大三度、纯四度、纯五度、大六度、大七度、纯八度</li>
-        <li><b>大三和弦</b> ＝ 根音 + 大三度 + 小三度（如 C-E-G）</li>
-        <li><b>小三和弦</b> ＝ 根音 + 小三度 + 大三度（如 A-C-E）</li>
+        <li><b>大三和弦</b> ＝ 根音 + 大三度 + 小三度（如 C-E-G，C到E是大三度，E到G是小三度）</li>
+        <li><b>小三和弦</b> ＝ 根音 + 小三度 + 大三度（如 A-C-E，A到C是小三度，C到E是大三度）</li>
       </ul>
       <h4>上五下四（转调的钥匙）</h4>
-      <div class="callout"><b>往上数五度 ＝ 往下数四度</b>（因为五度+四度正好一个八度）。例如 C 往上五度是 G，往下四度也是 G。这条规则贯穿五度圈和转调。</div>
+      <div class="callout"><b>往上数五度 ＝ 往下数四度</b>（因为五度+四度减一个八度正好回到同位置）。例如 C 往上五度是 G，往下四度也是 G。这条规则贯穿五度圈和转调。</div>
+      <div class="note">先只记住 <b>C→G 是「上五」、C→F 是「下四」</b>，五度圈就是靠这一步一步数出来的。</div>
     </div>
   </details>
 
@@ -393,38 +426,41 @@
       <ul>
         <li><b>大调</b>：明亮、欢快。公式 <code>全全半全全全半</code>。</li>
         <li><b>小调</b>：忧伤、暗淡。自然小调公式 <code>全半全全半全全</code>。</li>
-        <li><b>关系大小调</b>：共用同一组音、只是起始音不同的大调和小调。如 <b>C 大调 ↔ A 小调</b>（都用白键）。</li>
+        <li><b>关系大小调</b>：共用同一组音、只是起始音不同的大调和小调。</li>
       </ul>
-      <p>这就是为什么你常看到 Am 和 C 一起出现——它们是「一家人」，和弦可以互用。</p>
+      <p>最典型的关系大小调：<b>C 大调 ↔ A 小调</b>——它们都用白键，但 C 大调从 C 开始（听感明亮），A 小调从 A 开始（听感忧伤）。</p>
+      <div class="callout">这就是为什么你常看到 <b>Am 和 C 一起出现</b>——它们是「一家人」，和弦可以互用。同理 <b>Em 是 G 大调的关系小调</b>。</div>
+      <p>规律：大调主音往下数<b>小三度</b>（3 个半音），就是它的关系小调。C 往下 3 个半音 ＝ A。</p>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">基础</span>三和弦：大三 / 小三 / 减三<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>三个音按「三度」叠起来就是三和弦：</p>
+      <p>三个音按「三度」叠起来就是<b>三和弦</b>（第一个音叫根音，往上依次是三音、五音）。</p>
       <table>
         <tr><th>类型</th><th>结构</th><th>例子</th><th>听感</th></tr>
         <tr><td>大三和弦</td><td>根音+大三度+小三度</td><td>C＝C E G</td><td>明亮</td></tr>
         <tr><td>小三和弦</td><td>根音+小三度+大三度</td><td>Am＝A C E</td><td>暗淡</td></tr>
         <tr><td>减三和弦</td><td>根音+小三度+小三度</td><td>Bdim＝B D F</td><td>紧张、不稳定</td></tr>
       </table>
-      <div class="note">大调里的 1、4、5 级是大三和弦，2、3、6 级是小三和弦，7 级是减三和弦。这就是后面「和弦级数」的由来。</div>
-      <button class="play-btn" onclick="playChord('C')">▶ 大三和弦 C</button>
-      <button class="play-btn" onclick="playChord('Am')">▶ 小三和弦 Am</button>
+      <h4>怎么理解「叠三度」</h4>
+      <p>以 C 和弦为例：根音 C，往上数三度是 E，E 再往上数三度是 G，所以 C 和弦 ＝ C E G。这就是「叠三度」。</p>
+      <div class="note">大调里的 <b>1、4、5 级是大三和弦，2、3、6 级是小三和弦，7 级是减三和弦</b>。这就是后面「和弦级数」的由来，先记住这个规律。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">进阶</span>七和弦：怎么来的、怎么按<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>在三和弦上再叠一个三度（第 7 个音），就是七和弦：</p>
+      <p>在三和弦上<b>再叠一个三度</b>（第 7 个音，叫七音），就是七和弦。它比三和弦多一层「色彩」。</p>
       <ul>
-        <li><b>大七和弦</b> Cmaj7 ＝ C E G B（大三和弦 + 大七度）</li>
-        <li><b>小七和弦</b> Am7 ＝ A C E G（小三和弦 + 小七度）</li>
-        <li><b>属七和弦</b> G7 ＝ G B D F（大三和弦 + <b>小</b>七度）</li>
+        <li><b>大七和弦</b> Cmaj7 ＝ C E G B（大三和弦 + 大七度）—— 温柔、梦幻</li>
+        <li><b>小七和弦</b> Am7 ＝ A C E G（小三和弦 + 小七度）—— 柔和、内敛</li>
+        <li><b>属七和弦</b> G7 ＝ G B D F（大三和弦 + <b>小</b>七度）—— 紧张、想「回家」</li>
       </ul>
-      <div class="callout">属七和弦（G7）有<b>强烈解决到主和弦（C）</b>的倾向。G7 → C 是音乐里最经典的「回家」进行。</div>
+      <div class="callout">属七和弦（G7）有<b>强烈解决到主和弦（C）</b>的倾向。<b>G7 → C</b> 是音乐里最经典的「回家」进行，很多歌结尾都用它。</div>
+      <div class="note">先掌握这三种七和弦的「感觉」就够用，具体按法到附录和弦图里查。</div>
     </div>
   </details>
 
@@ -438,6 +474,8 @@
         <tr><th>功能</th><td>主</td><td>-</td><td>-</td><td>下属</td><td>属</td><td>-</td><td>导</td></tr>
       </table>
       <p>三大功能：<b>1级(主)、4级(下属)、5级(属)</b>。绝大部分流行歌就是这几级在转。</p>
+      <h4>级数思维的好处</h4>
+      <p>把「具体和弦名」换成「级数」，你就拿到了<b>脱谱和转调的万能钥匙</b>——因为级数在任何调里都是同一套。</p>
       <div class="callout">记住万能走向 <b>1-6-4-5</b>（C 调里是 C-Am-F-G）。会用级数思维，你就能脱谱看透所有歌。</div>
     </div>
   </details>
@@ -445,8 +483,9 @@
   <details class="card">
     <summary><span class="tag">进阶</span>为什么很少用 7 级和弦<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>7 级是<b>减三和弦</b>，音色紧张、不稳定，有强烈「想解决到 1 级」的倾向。所以它很少作为停留和弦，通常只作为<b>经过和弦</b>短暂出现。</p>
-      <div class="note">同理，你在流行歌里几乎看不到单独停在 Bdim 上——它总是急着「回」到 C。</div>
+      <p>7 级是<b>减三和弦</b>（如 C 调里的 Bdim），音色<b>紧张、不稳定</b>，有强烈「想解决到 1 级」的倾向。</p>
+      <p>因为它太「不稳」了，所以很少作为停留和弦，通常只作为<b>经过和弦</b>短暂出现（比如 1-7-6 这样顺下来）。</p>
+      <div class="note">同理，你在流行歌里几乎看不到单独停在 Bdim 上——它总是急着「回」到 C。这就是为什么新手弹唱基本用不到 7 级。</div>
     </div>
   </details>
 
@@ -458,6 +497,8 @@
         <li>弹唱时贝斯声部通常就弹根音，它决定整首歌的和声「脚底」。</li>
         <li><b>转位</b>：把根音以外的音放到最低位置，和弦不变但听感变化（如 C/E 就是 C 和弦以 E 为低音）。</li>
       </ul>
+      <h4>根音在指板上的位置</h4>
+      <p>低音弦（6 弦 E、5 弦 A）上的音最常做根音。所以记住 6 弦、5 弦上的音，就能快速定位和弦根音。</p>
       <div class="callout"><b>脱谱第一步就是记根音</b>：把每小节的根音串起来，你就能听出和弦走向的轮廓。</div>
     </div>
   </details>
@@ -465,7 +506,9 @@
   <details class="card">
     <summary><span class="tag">进阶</span>五度圈 与 各调的升降号 ➕<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>用「上五下四」把各调排成一圈：</p>
+      <p>用「上五下四」把各调排成一圈，就是五度圈。它是记各调升降号的利器。</p>
+      <h4>五度圈图解</h4>
+      <div id="circle-fifths"></div>
       <p>升号方向（上五）：<code>C → G → D → A → E → B → F# → C#</code></p>
       <p>降号方向（下四）：<code>C → F → Bb → Eb → Ab → Db → Gb</code></p>
       <table>
@@ -485,7 +528,7 @@
         <tr><td>Db</td><td>5 降</td><td>Bb Eb Ab Db Gb</td></tr>
         <tr><td>Gb</td><td>6 降</td><td>Bb Eb Ab Db Gb Cb</td></tr>
       </table>
-      <div class="note">你标题里那串 <code>b / DF / E / 7#</code> 就是在讲各调的升降号。升号顺序口诀：<b>F-C-G-D-A-E-B</b>（「发多梭来拉米西」）。</div>
+      <div class="note">升号顺序口诀：<b>F-C-G-D-A-E-B</b>（「发多梭来拉米西」）。每往升号方向走一调，就多一个升号。</div>
     </div>
   </details>
 </section>
@@ -509,6 +552,8 @@
         <li><b>5 品</b>和 <b>12 品</b>是参照点：12 品＝空弦音的高八度，整个指板在此「循环」。</li>
       </ul>
       <div class="note">记住指板音是脱谱的第一前提——你才知道自己按的是什么、根音在哪。</div>
+      <h4>指板音全图（0–12 品，绿色＝C 音）</h4>
+      <div id="fretboard"></div>
     </div>
   </details>
 
@@ -520,7 +565,7 @@
         <li><b>mi 指型</b>：从 6 弦第 12 品（E，唱 mi）起步</li>
         <li><b>la 指型</b>：从 5 弦第 12 品（A，唱 la）起步</li>
       </ul>
-      <div class="callout">博主原话：<b>mi 型、la 型会了就够入门，不要痴迷背指型</b>。真正重要的是理解<b>音程关系</b>——上五下四比会指型更重要。</div>
+      <div class="callout"><b>mi 型、la 型会了就够入门，不要痴迷背指型</b>。真正重要的是理解<b>音程关系</b>——上五下四比会指型更重要。</div>
     </div>
   </details>
 
@@ -589,7 +634,7 @@
         <li><b>CAGED 思维</b>：移动把位即可。</li>
         <li><b>服务人声</b>：唱不上去就降调，唱不下去就升调，找到适合自己的调。</li>
       </ul>
-      <div class="callout">博主整套课的终极目标就是「任意调式转换 + 服务人声」，实现自由弹唱随意转调。</div>
+      <div class="callout">整套课的终极目标就是「任意调式转换 + 服务人声」，实现自由弹唱随意转调。</div>
     </div>
   </details>
 
@@ -612,7 +657,7 @@
         <li>夹 2 品后，按 C 形状实际弹的是 D 调。</li>
         <li>它让你用<b>简单的开放和弦形状</b>弹出不同的调。</li>
       </ul>
-      <div class="callout">博主的观点：变调夹是拐杖，<b>别依赖它</b>。真正会用 CAGED 转调，才能彻底摆脱变调夹。</div>
+      <div class="callout">变调夹是拐杖，<b>别依赖它</b>。真正会用 CAGED 转调，才能彻底摆脱变调夹。</div>
     </div>
   </details>
 
@@ -892,6 +937,25 @@
       </ul>
     </div>
   </details>
+
+  <details class="card">
+    <summary><span class="tag">实战</span>手动扒谱五步法（听根音→定调→套级数）<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>这是脱谱弹唱的核心技能，不靠任何 AI，用耳朵 + 级数思维就能扒下大部分流行歌。</p>
+      <h4>第 1 步：听根音（低音）</h4>
+      <p>反复听歌，重点抓<b>低音声部</b>（贝斯 / 吉他低音弦）每次换和弦时那个最低音。把它当「台阶」，一个音一个音记下来。</p>
+      <h4>第 2 步：定调（找主音 do）</h4>
+      <p>把记下的根音串起来，找到<b>最稳、最有「结束感」的那个音</b>，通常就是主音（do），也就是这首歌的调。</p>
+      <div class="callout">技巧：歌曲<b>最后结束</b>的那个和弦/音，九成就是主和弦（主音）。</div>
+      <h4>第 3 步：套级数</h4>
+      <p>把每个根音换算成<b>级数</b>。以 C 调为例：C＝Ⅰ、Dm＝Ⅱ、Em＝Ⅲ、F＝Ⅳ、G＝Ⅴ、Am＝Ⅵ、Bdim＝Ⅶ。</p>
+      <h4>第 4 步：套万能走向</h4>
+      <p>大部分流行歌逃不出这几套：<b>1-6-4-5、1-5-6-4、卡农进行 1-5-6-3-4-1-4-5</b>。把你的根音序列和它们对照，很快能套出来。</p>
+      <h4>第 5 步：换调套用</h4>
+      <p>一旦确定级数走向，想用什么调弹，就直接按那个调的级数套和弦。这就是「任意调自由弹唱」。</p>
+      <div class="note">练习建议：拿一首你熟的歌，先别看谱，按这五步扒一遍，再和原谱对照。练 10 首后，「耳力 + 级数」就通了。</div>
+    </div>
+  </details>
 </section>
 
 <section class="part" id="part-5">
@@ -908,7 +972,7 @@
         <li>在指板上爬 mi 型和 la 型音阶，熟悉音的位置。</li>
         <li>练习时<b>边弹边唱音名/唱名</b>，把位置和声音对上。</li>
       </ul>
-      <div class="callout">博主提醒：会这两个型<b>就够了，不要痴迷</b>。重点是<b>音程关系</b>，不是背形状。</div>
+      <div class="callout">会这两个型<b>就够了，不要痴迷</b>。重点是<b>音程关系</b>，不是背形状。</div>
     </div>
   </details>
 
@@ -1003,6 +1067,14 @@
   </details>
 
   <details class="card" open>
+    <summary><span class="tag">图表</span>各调和弦速查表<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>各调 1-6 级常用和弦（7 级减和弦少用，省略）。图上数字＝手指（1食 2中 3无名 4小指），底部数字＝弦号（6最粗→1最细）。</p>
+      <div id="chord-chart"></div>
+    </div>
+  </details>
+
+  <details class="card" open>
     <summary><span class="tag">图表</span>常用节奏型图解<span class="arrow">▶</span></summary>
     <div class="body">
       <h4>分解节奏型（数字＝弦号）</h4>
@@ -1037,8 +1109,19 @@
   </details>
 </section>
 
+<section class="part" id="part-7">
+  <div class="part-head">
+    <div class="part-num">七</div>
+    <h2>曲谱练习</h2>
+    <span class="desc">从简单到难，可转调</span>
+  </div>
+  <p style="color:var(--muted)">以下曲谱由网页自动渲染。指弹是单音旋律六线谱（数字＝品位，最上面是 1 弦），弹唱是和弦走向谱（下拉可选调转调）。</p>
+  <div id="song-list"></div>
+  <div class="video-box">🎬 视频讲解区（预留）—— 之后可在此嵌入视频或指法动画</div>
+</section>
+
 <footer>
-  <p>本教程基于抖音某吉他教学博主的内容整理，并补充了必要的乐理与指弹基础。</p>
+  <p>本教程是一套吉他自学知识体系，涵盖乐理、弹唱与指弹。</p>
   <p>核心主线：音程关系 → 指板音 → CAGED → 脱谱 · 脱离三品 · 任意调自由弹唱。</p>
   <p>纯静态网页，可直接部署到 GitHub Pages。</p>
 </footer>
@@ -1072,6 +1155,7 @@ const parts = [
   {id:"part-4", title:"四、弹唱篇 · 脱谱进阶"},
   {id:"part-5", title:"五、指弹篇 · 音阶与即兴"},
   {id:"part-6", title:"附录"},
+  {id:"part-7", title:"七、曲谱练习"},
 ];
 const nav = document.getElementById('nav');
 parts.forEach(p=>{
@@ -1122,11 +1206,36 @@ const chords = {
   'F#m': {frets:'244222', fingers:[1,4,3,1,1,1], barre:2},
   'Cm':  {frets:'x35543', fingers:[0,1,4,3,2,1], barre:3},
   'G#m': {frets:'466444', fingers:[1,4,3,1,1,1], barre:4},
+  'B':   {frets:'x24442', fingers:[0,1,3,4,4,1], barre:2},
+  'C#m': {frets:'x46654', fingers:[0,1,3,4,4,1], barre:4},
+  'F#':  {frets:'244322', fingers:[1,3,4,2,1,1], barre:2},
+};
+
+/* 各调 1-7 级和弦（0-based）*/
+const keys = {
+  'C': ['C','Dm','Em','F','G','Am','Bdim'],
+  'G': ['G','Am','Bm','C','D','Em','F#dim'],
+  'D': ['D','Em','F#m','G','A','Bm','C#dim'],
+  'A': ['A','Bm','C#m','D','E','F#m','G#dim'],
+  'E': ['E','F#m','G#m','A','B','C#m','D#dim'],
+  'F': ['F','Gm','Am','Bb','C','Dm','Edim'],
+};
+
+/* 常用节奏型 */
+const rhythms = {
+  '53231323': { label:'5-3-2-3-1-3-2-3', type:'分解', tip:'根音在5弦（C、Am、Dm 等）' },
+  '63231323': { label:'6-3-2-3-1-3-2-3', type:'分解', tip:'根音在6弦（G、E、F 等）' },
+  '632123':   { label:'6-3-2-1-2-3', type:'分解', tip:'低音分解' },
+  '532123':   { label:'5-3-2-1-2-3', type:'分解', tip:'低音分解' },
+  'T1213121': { label:'T-1-2-1-3-1-2-1', type:'分解', tip:'万能分解，T=根音弦' },
+  'pop':      { label:'↓ ↓↑ ↑↓↑', type:'扫弦', tip:'流行扫弦，最常用' },
+  'folk':     { label:'↓ ↓↑ ↓ ↓↑', type:'扫弦', tip:'民谣扫弦，舒缓' },
+  'rock':     { label:'↓↑ ↓↑ ↓↑ ↓↑', type:'扫弦', tip:'摇滚，每拍上下' },
 };
 
 /* 渲染一个和弦图 SVG */
 function chordSVG(name, data){
-  const W=120, H=150;
+  const W=120, H=170;
   const topPad=22, leftPad=18;
   const fretH=26, strW=17;
   const frets = data.frets;
@@ -1159,17 +1268,74 @@ function chordSVG(name, data){
     const n = Number(c);
     const x = leftPad + s*strW;
     const y = topPad + (n-0.5)*fretH;
-    svg += `<circle class="svg-dot" cx="${x}" cy="${y}" r="8"/>`;
+    svg += `<circle class="svg-dot" cx="${x}" cy="${y}" r="8.5"/>`;
     if(data.fingers && data.fingers[s]){
-      svg += `<text class="svg-finger" x="${x}" y="${y+4}" font-size="11" text-anchor="middle">${data.fingers[s]}</text>`;
+      svg += `<text class="svg-finger" x="${x}" y="${y+4}" font-size="12" text-anchor="middle">${data.fingers[s]}</text>`;
     }
   }
   if(data.barre){
     const y = topPad + (data.barre-0.5)*fretH;
     svg += `<rect class="svg-barre" x="${leftPad-6}" y="${y-8}" width="${5*strW+12}" height="16" rx="8" opacity="0.9"/>`;
   }
+  for(let s=0;s<6;s++){
+    const x = leftPad + s*strW;
+    svg += `<text class="svg-pos" x="${x}" y="${topPad+fretH*fretCount+14}" font-size="10" text-anchor="middle">${6-s}</text>`;
+  }
   svg += `</svg>`;
-  return `<div class="chord-card" onclick="playChord('${name}')" title="点击听声音" style="cursor:pointer">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
+  return `<div class="chord-card">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
+}
+
+/* 横版指板图：展示和弦在指板上的形状 */
+function renderFretboardChord(name){
+  const data = chords[name];
+  if(!data) return '';
+  const frets = data.frets;
+  const nums = [];
+  for(let s=0;s<6;s++){
+    const c = frets[s];
+    if(c==='x'){ nums.push(null); continue; }
+    nums.push(c==='0' ? 0 : Number(c));
+  }
+  const positive = nums.filter(n=>n!==null && n>0);
+  const maxF = positive.length ? Math.max(...positive) : 0;
+  const minF = positive.length ? Math.min(...positive) : 0;
+  const start = minF > 1 ? minF - 1 : 0;
+  const fretCount = Math.max(4, (maxF - start) + 1);
+  const strGap = 18, fretW = 40, leftPad = 52, topPad = 22;
+  const W = leftPad + fretCount*fretW + 18;
+  const H = topPad + 5*strGap + 28;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="120" xmlns="http://www.w3.org/2000/svg">`;
+  for(let s=0;s<6;s++){
+    const y = topPad + s*strGap;
+    svg += `<line class="svg-line" x1="${leftPad}" y1="${y}" x2="${leftPad+fretCount*fretW}" y2="${y}" stroke-width="${s>=3?1.2:2}"/>`;
+  }
+  for(let f=0;f<=fretCount;f++){
+    const x = leftPad + f*fretW;
+    svg += `<line class="svg-fret" x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+5*strGap}" stroke-width="${f===0?4:1}"/>`;
+  }
+  if(start>0){
+    svg += `<text class="svg-pos" x="${leftPad-10}" y="${topPad+fretW*0.5+4}" font-size="11">${start}</text>`;
+  }
+  for(let s=0;s<6;s++){
+    const c = frets[s];
+    const y = topPad + s*strGap;
+    if(c==='x'){
+      svg += `<text class="svg-x" x="${leftPad-16}" y="${y+4}" font-size="11">×</text>`;
+      continue;
+    }
+    if(c==='0'){
+      svg += `<text class="svg-o" x="${leftPad-16}" y="${y+4}" font-size="11">○</text>`;
+      continue;
+    }
+    const n = Number(c);
+    const x = leftPad + (n - start + 0.5)*fretW;
+    svg += `<circle class="svg-dot" cx="${x}" cy="${y}" r="7.5"/>`;
+    if(data.fingers && data.fingers[s]){
+      svg += `<text class="svg-finger" x="${x}" y="${y+3.5}" font-size="10" text-anchor="middle">${data.fingers[s]}</text>`;
+    }
+  }
+  svg += `</svg>`;
+  return svg;
 }
 
 /* 基础和弦 */
@@ -1179,6 +1345,22 @@ document.getElementById('chord-basic').innerHTML = basic.map(n=>chordSVG(n, chor
 document.getElementById('caged-grid').innerHTML = ['C','A','G','E','D'].map(n=>chordSVG(n, chords[n])).join('');
 /* 全部和弦 */
 document.getElementById('chord-all').innerHTML = Object.keys(chords).map(n=>chordSVG(n, chords[n])).join('');
+
+/* 各调和弦速查表 */
+function renderChordChart(){
+  const keyList = ['C','G','D','A','E','F'];
+  const roman = ['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ','Ⅵ'];
+  let html = '';
+  keyList.forEach(k=>{
+    html += `<h4 style="margin:18px 0 8px">${k} 调</h4><div class="chord-grid">`;
+    keys[k].slice(0,6).forEach((c,i)=>{
+      html += `<div style="text-align:center">${chordSVG(c, chords[c])}<div style="font-weight:700">${c}</div><div style="font-size:11px;color:var(--muted)">${roman[i]}</div></div>`;
+    });
+    html += `</div>`;
+  });
+  return html;
+}
+document.getElementById('chord-chart').innerHTML = renderChordChart();
 
 /* ===== 练习清单 ===== */
 const checklistItems = [
@@ -1226,79 +1408,282 @@ function resetChecklist(){
   location.reload();
 }
 
-/* ===== 音频：Web Audio 合成吉他音 ===== */
-let audioCtx = null;
-function getCtx(){
-  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-  if(audioCtx.state==='suspended') audioCtx.resume();
-  return audioCtx;
+/* ===== 曲谱库（弦号 s：1=最细1弦 … 6=最粗6弦）===== */
+const songs = {
+  twinkle: {
+    title: "小星星", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:2,f:1,d:1},{s:2,f:1,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:5,d:1},{s:1,f:3,d:2},
+      {s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:3,d:1},{s:2,f:1,d:2},
+      {s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:3,d:2},
+      {s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:3,d:2},
+      {s:2,f:1,d:1},{s:2,f:1,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:5,d:1},{s:1,f:3,d:2},
+      {s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:3,d:1},{s:2,f:1,d:2},
+    ]
+  },
+  happy: {
+    title: "生日快乐", type: "tab", key: "C", diff: 2,
+    notes: [
+      {s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:3,d:1},{s:2,f:1,d:1},{s:2,f:0,d:1},
+      {s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:3,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},
+      {s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},{s:2,f:0,d:1},{s:1,f:5,d:1},
+      {s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},
+    ]
+  },
+  prog145: {
+    title: "1-4-5 基础走向", type: "chord", key: "C", diff: 1,
+    chords: ["C","F","G"], degrees: [0,3,4], rhythm: "53231323", repeat: 4
+  },
+  prog1645: {
+    title: "1-6-4-5 万能走向", type: "chord", key: "C", diff: 2,
+    chords: ["C","Am","F","G"], degrees: [0,5,3,4], rhythm: "53231323", repeat: 4
+  },
+  prog1564: {
+    title: "1-5-6-4 走向", type: "chord", key: "C", diff: 2,
+    chords: ["C","G","Am","F"], degrees: [0,4,5,3], rhythm: "53231323", repeat: 4
+  },
+  prog1625: {
+    title: "1-6-2-5 走向", type: "chord", key: "C", diff: 2,
+    chords: ["C","Am","Dm","G"], degrees: [0,5,1,4], rhythm: "53231323", repeat: 4
+  },
+  prog6415: {
+    title: "6-4-1-5 走向", type: "chord", key: "C", diff: 2,
+    chords: ["Am","F","C","G"], degrees: [5,3,0,4], rhythm: "53231323", repeat: 4
+  },
+  progcanon: {
+    title: "卡农进行 1-5-6-3-4-1-4-5", type: "chord", key: "C", diff: 3,
+    chords: ["C","G","Am","Em","F","C","F","G"], degrees: [0,4,5,2,3,0,3,4], rhythm: "53231323", repeat: 2
+  },
+  mary: {
+    title: "玛丽有只小羊羔", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:0,d:2},
+      {s:2,f:3,d:1},{s:2,f:3,d:1},{s:2,f:3,d:2},
+      {s:1,f:0,d:1},{s:1,f:3,d:1},{s:1,f:3,d:2},
+      {s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},
+      {s:2,f:3,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:2},
+    ]
+  },
+  tigers: {
+    title: "两只老虎", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},
+      {s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:2},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:2},
+      {s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},{s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},
+      {s:2,f:1,d:1},{s:1,f:3,d:1},{s:2,f:1,d:2},{s:2,f:1,d:1},{s:1,f:3,d:1},{s:2,f:1,d:2},
+    ]
+  },
+  bee: {
+    title: "小蜜蜂", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:1,f:3,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:2,f:3,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:3,d:2},
+    ]
+  },
+  london: {
+    title: "伦敦桥", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:2},
+      {s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:1,d:2},
+      {s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:2},
+      {s:1,f:3,d:1},{s:1,f:5,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:2},
+      {s:2,f:3,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:2,f:1,d:2},
+    ]
+  },
+  ode: {
+    title: "欢乐颂", type: "tab", key: "C", diff: 2,
+    notes: [
+      {s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},
+      {s:2,f:1,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:3,d:2},
+      {s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},
+      {s:2,f:1,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},{s:2,f:1,d:2},
+    ]
+  },
+  rowboat: {
+    title: "划船曲", type: "tab", key: "C", diff: 2,
+    notes: [
+      {s:2,f:1,d:1},{s:2,f:1,d:1},{s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},
+      {s:1,f:0,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},{s:1,f:3,d:1},
+      {s:1,f:8,d:1},{s:1,f:8,d:1},{s:1,f:8,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},{s:2,f:1,d:1},{s:2,f:1,d:1},
+      {s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:2},
+    ]
+  },
+};
+
+/* ===== 六线谱渲染器 ===== */
+function renderTab(song){
+  const notes = song.notes;
+  const beatW = 26, strGap = 15, leftPad = 34, topPad = 22;
+  const totalBeats = notes.reduce((a,n)=>a+n.d, 0);
+  const width = leftPad + totalBeats*beatW + 24;
+  const height = topPad + 5*strGap + 16;
+  let svg = `<svg viewBox="0 0 ${width} ${height}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
+  for(let s=1;s<=6;s++){
+    const y = topPad + (s-1)*strGap;
+    svg += `<line class="svg-line" x1="${leftPad}" y1="${y}" x2="${leftPad+totalBeats*beatW}" y2="${y}" stroke-width="${s>=4?1.5:2.2}"/>`;
+  }
+  for(let b=0;b<=totalBeats;b+=4){
+    const x = leftPad + b*beatW;
+    svg += `<line class="svg-fret" x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+5*strGap}" stroke-width="${b===0||b===totalBeats?2:1}"/>`;
+  }
+  let beat = 0;
+  notes.forEach(n=>{
+    const x = leftPad + (beat + n.d/2)*beatW;
+    const y = topPad + (n.s-1)*strGap;
+    svg += `<text class="svg-note tab-note" x="${x}" y="${y+4}" font-size="12" text-anchor="middle">${n.f}</text>`;
+    beat += n.d;
+  });
+  svg += `</svg>`;
+  return svg;
 }
-// 六根弦空弦频率（6弦→1弦）：E2 A2 D3 G3 B3 E4
-const openFreqs = [82.41, 110.00, 146.83, 196.00, 246.94, 329.63];
-// Karplus-Strong 拨弦合成（模拟吉他弦音）
-function pluck(freq, when){
-  const ctx = getCtx();
-  const t = ctx.currentTime + (when||0);
-  const out = ctx.createGain();
-  out.gain.setValueAtTime(0.5, t);
-  out.gain.exponentialRampToValueAtTime(0.0001, t + 1.8);
-  out.connect(ctx.destination);
 
-  const delay = ctx.createDelay(1);
-  delay.delayTime.value = 1/freq;
-
-  const lp = ctx.createBiquadFilter();
-  lp.type = 'lowpass';
-  lp.frequency.value = Math.min(freq*6, 6000);
-  lp.Q.value = 0.5;
-
-  const fb = ctx.createGain();
-  fb.gain.value = 0.96;
-
-  delay.connect(lp);
-  lp.connect(fb);
-  fb.connect(delay);
-  lp.connect(out);
-
-  const nb = ctx.createBuffer(1, Math.floor(ctx.sampleRate*0.02), ctx.sampleRate);
-  const d = nb.getChannelData(0);
-  for(let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
-  const noise = ctx.createBufferSource();
-  noise.buffer = nb;
-  noise.connect(delay);
-  noise.start(t);
+/* ===== 和弦谱渲染器 ===== */
+function renderChordSheet(song, key, rhythm){
+  key = key || song.key;
+  rhythm = rhythm || song.rhythm;
+  const degrees = song.degrees || [0,5,3,4];
+  const roman = ['Ⅰ','Ⅱ','Ⅲ','Ⅳ','Ⅴ','Ⅵ','Ⅶ'];
+  const labels = degrees.map(d=>roman[d]);
+  const chordNames = degrees.map(d=>keys[key][d]);
+  let html = `<div class="chord-sheet">`;
+  chordNames.forEach((c,i)=>{
+    html += `<div style="text-align:center">${renderFretboardChord(c)}<div style="font-weight:700;margin-top:4px">${c}</div><div style="font-size:12px;color:var(--muted)">${labels[i]}</div></div>`;
+  });
+  html += `</div>`;
+  html += renderRhythm(rhythm);
+  html += `<p>整组循环 ${song.repeat} 遍（当前 ${key} 调）。级数不变，换调只换和弦名。</p>`;
+  return html;
 }
-// 播放和弦（琶音，从低音到高音）
-function playChord(name){
-  const data = chords[name];
-  if(!data) return;
-  const notes = [];
+
+function renderRhythm(rhythm){
+  const r = rhythms[rhythm] || { label: rhythm, type: '分解', tip: '' };
+  return `<div class="rhythm-box"><b>节奏型</b>：<span class="mono" style="font-size:16px">${r.label}</span><span class="rhythm-tag">${r.type}</span><br><span style="font-size:13px;color:var(--muted)">${r.tip}</span></div>`;
+}
+
+/* ===== 曲谱列表渲染 ===== */
+function renderSongList(){
+  const container = document.getElementById('song-list');
+  const order = ['mary','tigers','twinkle','bee','london','happy','ode','rowboat','prog145','prog1645','prog1564','prog1625','prog6415','progcanon'];
+  let html = '';
+  order.forEach(id=>{
+    const s = songs[id];
+    if(!s) return;
+    const stars = '★'.repeat(s.diff||1) + '☆'.repeat(5-(s.diff||1));
+    const icon = s.type==='tab' ? '🎵 指弹' : '🎤 弹唱';
+    html += `<div class="song-card"><h4>${icon} · ${s.title} <span style="font-size:13px;color:var(--orange)">${stars}</span></h4>`;
+    html += `<p class="meta">${s.key} 大调${s.type==='chord' ? ' · 节奏型 '+s.rhythm : ''}</p>`;
+    if(s.type==='chord'){
+      html += `<select id="key-${id}" onchange="changeChordSheet('${id}')" style="background:var(--btn-bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:10px;font-size:14px;">`;
+      ['C','G','D','A','E','F'].forEach(k=>{ html += `<option value="${k}" ${k===s.key?'selected':''}>${k} 调</option>`; });
+      html += `</select> `;
+      html += `<select id="rhythm-${id}" onchange="changeChordSheet('${id}')" style="background:var(--btn-bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-bottom:10px;font-size:14px;">`;
+      Object.keys(rhythms).forEach(r=>{ html += `<option value="${r}" ${r===s.rhythm?'selected':''}>${rhythms[r].label}</option>`; });
+      html += `</select>`;
+    }
+    html += `<div id="song-${id}"></div></div>`;
+  });
+  container.innerHTML = html;
+  order.forEach(id=>{
+    const s = songs[id];
+    if(!s) return;
+    const el = document.getElementById('song-'+id);
+    if(s.type==='tab') el.innerHTML = renderTab(s);
+    else el.innerHTML = renderChordSheet(s);
+  });
+}
+function changeChordSheet(id){
+  const s = songs[id];
+  const key = document.getElementById('key-'+id).value;
+  const rhythm = document.getElementById('rhythm-'+id).value;
+  document.getElementById('song-'+id).innerHTML = renderChordSheet(s, key, rhythm);
+}
+
+/* 渲染曲谱列表 */
+renderSongList();
+
+/* ===== 指板音全图 ===== */
+function renderFretboard(){
+  const strings = ['E','A','D','G','B','E'];
+  const notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+  const leftPad = 50, topPad = 24, fretW = 40, strGap = 20;
+  const W = leftPad + 12*fretW + 26;
+  const H = topPad + 5*strGap + 26;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
   for(let s=0;s<6;s++){
-    const c = data.frets[s];
-    if(c==='x') continue;
-    notes.push(c==='0' ? openFreqs[s] : openFreqs[s]*Math.pow(2, Number(c)/12));
+    const y = topPad + s*strGap;
+    svg += `<line class="svg-line" x1="${leftPad}" y1="${y}" x2="${leftPad+12*fretW}" y2="${y}" stroke-width="${s>=3?1.2:2}"/>`;
   }
-  notes.forEach((f,i)=>pluck(f, i*0.14));
-}
-// 播放 C 大调音阶
-function playScale(){
-  const scale = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
-  scale.forEach((f,i)=>pluck(f, i*0.3));
-}
-// 播放节拍器
-function playMetronome(){
-  const ctx = getCtx();
-  for(let i=0;i<8;i++){
-    const t = ctx.currentTime + i*0.5;
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.frequency.value = i===0 ? 1000 : 800;
-    g.gain.setValueAtTime(i===0?0.5:0.3, t);
-    g.gain.exponentialRampToValueAtTime(0.0001, t+0.08);
-    o.connect(g); g.connect(ctx.destination);
-    o.start(t); o.stop(t+0.09);
+  for(let f=0;f<=12;f++){
+    const x = leftPad + f*fretW;
+    svg += `<line class="svg-fret" x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+5*strGap}" stroke-width="${f===0?4:1}"/>`;
   }
+  [3,5,7,9,12].forEach(f=>{
+    svg += `<text class="svg-pos" x="${leftPad+f*fretW-fretW/2}" y="${topPad+5*strGap+18}" font-size="10" text-anchor="middle">${f}</text>`;
+  });
+  for(let s=0;s<6;s++){
+    const openIdx = notes.indexOf(strings[s]);
+    for(let f=0;f<=12;f++){
+      const note = notes[(openIdx+f)%12];
+      const x = leftPad + f*fretW - fretW/2;
+      const y = topPad + s*strGap + 4;
+      if(note==='C'){
+        svg += `<text x="${x}" y="${y}" font-size="12" text-anchor="middle" style="fill:var(--green);font-weight:700">${note}</text>`;
+      } else {
+        svg += `<text class="svg-pos" x="${x}" y="${y}" font-size="10.5" text-anchor="middle">${note}</text>`;
+      }
+    }
+  }
+  svg += `</svg>`;
+  return svg;
 }
+document.getElementById('fretboard').innerHTML = renderFretboard();
+
+/* ===== 大调音阶图（全/半关系可视化）===== */
+function renderSemitoneChart(){
+  const scale = ['C','D','E','F','G','A','B','C'];
+  const intervals = ['全','全','半','全','全','全','半'];
+  const x0 = 30, y = 42, gap = 72;
+  const W = x0 + (scale.length-1)*gap + 30;
+  let svg = `<svg viewBox="0 0 ${W} 116" width="100%" xmlns="http://www.w3.org/2000/svg">`;
+  for(let i=0;i<scale.length;i++){
+    const x = x0 + i*gap;
+    svg += `<circle cx="${x}" cy="${y}" r="18" fill="var(--green)"/>`;
+    svg += `<text x="${x}" y="${y+5}" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">${scale[i]}</text>`;
+    if(i<scale.length-1){
+      svg += `<line x1="${x+18}" y1="${y}" x2="${x+gap-18}" y2="${y}" stroke="var(--svg-line)" stroke-width="1.5"/>`;
+      svg += `<text x="${x+gap/2}" y="${y-14}" font-size="13" font-weight="700" fill="var(--orange)" text-anchor="middle">${intervals[i]}</text>`;
+    }
+  }
+  svg += `<text x="${x0}" y="${y+46}" font-size="12" fill="var(--muted)">绿色圆＝C 大调的 7 个音；两圆之间标「全/半」表示间隔</text>`;
+  svg += `</svg>`;
+  return svg;
+}
+
+/* ===== 五度圈 ===== */
+function renderCircleOfFifths(){
+  const cx=150, cy=150, R=98;
+  let svg = `<svg viewBox="0 0 300 300" width="270" xmlns="http://www.w3.org/2000/svg">`;
+  svg += `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="var(--svg-line)" stroke-width="1.5"/>`;
+  svg += `<circle cx="${cx}" cy="${cy}" r="22" fill="var(--green)"/><text x="${cx}" y="${cy+6}" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">C</text>`;
+  const sharps = ['G','D','A','E','B','F#','C#'];
+  const flats = ['F','Bb','Eb','Ab','Db','Gb'];
+  sharps.forEach((k,i)=>{
+    const ang = -Math.PI/2 + (i+1)*(Math.PI/4);
+    const x = cx + Math.cos(ang)*R, y = cy + Math.sin(ang)*R;
+    svg += `<circle cx="${x}" cy="${y}" r="16" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="1.5"/>`;
+    svg += `<text x="${x}" y="${y+5}" font-size="12" font-weight="600" fill="var(--ink)" text-anchor="middle">${k}</text>`;
+  });
+  flats.forEach((k,i)=>{
+    const ang = Math.PI/2 - (i+1)*(Math.PI/4);
+    const x = cx + Math.cos(ang)*R, y = cy + Math.sin(ang)*R;
+    svg += `<circle cx="${x}" cy="${y}" r="16" fill="var(--code-bg)" stroke="var(--svg-line)" stroke-width="1.5"/>`;
+    svg += `<text x="${x}" y="${y+5}" font-size="12" fill="var(--muted)" text-anchor="middle">${k}</text>`;
+  });
+  svg += `<text x="${cx}" y="285" font-size="11" fill="var(--muted)" text-anchor="middle">橙色＝升号方向（上五）· 灰＝降号方向（下四）</text>`;
+  svg += `</svg>`;
+  return svg;
+}
+document.getElementById('semitone-chart').innerHTML = renderSemitoneChart();
+document.getElementById('circle-fifths').innerHTML = renderCircleOfFifths();
 </script>
 </body>
 </html>

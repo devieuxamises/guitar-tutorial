@@ -102,6 +102,16 @@
   }
   .sidebar nav a:hover{background:rgba(255,255,255,.08);text-decoration:none}
   .sidebar nav a.active{background:var(--green);color:#fff}
+  .search-box{
+    width:100%;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);
+    background:rgba(255,255,255,.08);color:var(--sidebar-ink);font-size:14px;margin-bottom:12px;
+    outline:none;
+  }
+  .search-box::placeholder{color:#8fa39a}
+  .fav-btn{margin-left:6px;cursor:pointer;font-size:16px;color:var(--orange);user-select:none;flex-shrink:0}
+  .fav-btn:hover{transform:scale(1.2)}
+  #fav-list a{display:block;color:var(--sidebar-ink);padding:5px 10px;border-radius:8px;font-size:13px;margin:1px 0}
+  #fav-list a:hover{background:rgba(255,255,255,.08);text-decoration:none}
   .sidebar .nav-part{
     font-size:12px;text-transform:uppercase;letter-spacing:1px;
     color:var(--orange);font-weight:700;
@@ -258,6 +268,9 @@
   .svg-line{stroke:var(--svg-line)}
   .svg-fret{stroke:var(--svg-line)}
   .svg-dot{fill:var(--green)}
+  .fdot{transform-box:fill-box;transform-origin:center}
+  .chord-card.animating .fdot{animation:fingerPress .35s ease-out forwards;animation-delay:var(--d,0s)}
+  @keyframes fingerPress{0%{transform:scale(1.7)}100%{transform:scale(1)}}
   .svg-finger{fill:#fff}
   .svg-x{fill:var(--svg-mute)}
   .svg-o{fill:var(--svg-ink)}
@@ -300,7 +313,9 @@
   <button class="menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰ 目录</button>
   <p class="logo">吉他<em>自学</em>教程</p>
   <p class="sub">从零基础到脱谱自由弹唱</p>
+  <input class="search-box" id="search" placeholder="🔍 搜索知识点..." oninput="searchTutorial(this.value)">
   <nav id="nav"></nav>
+  <div id="fav-list"></div>
   <div class="hint">
     核心主线：<br>
     音程关系 → 指板音 → CAGED<br>
@@ -400,6 +415,7 @@
       <h4>为什么它这么重要</h4>
       <p>这是整套体系<b>最重要的底层逻辑</b>。只要会这个公式，<b>任何调的音阶你都能自己推出来</b>，不用背。比如要推 G 大调：从 G 出发，全全半全全全半走一遍，就是 G A B C D E F# G（注意 F 要升）。</p>
       <div class="callout">练习：自己从 D 出发，按公式推一遍 D 大调，看哪里需要升号。</div>
+      <div class="note">✅ <b>自测</b>：能不看笔记，从任意音出发推完整音阶，并指出哪几个音需要升/降，就算过关。</div>
     </div>
   </details>
 
@@ -465,6 +481,30 @@
   </details>
 
   <details class="card">
+    <summary><span class="tag">进阶</span>和弦色彩：挂留 / 加九 / 转位 ➕<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>在三和弦的基础上「做手脚」，能得到更丰富的色彩。</p>
+      <h4>挂留和弦 sus2 / sus4</h4>
+      <ul>
+        <li><b>sus2</b>：把三音换成<b>二度</b>（如 Csus2＝C D G），听感空灵、悬浮。</li>
+        <li><b>sus4</b>：把三音换成<b>四度</b>（如 Csus4＝C F G），听感紧张、悬着。</li>
+        <li>挂留常用来「吊胃口」，然后解决回原和弦。</li>
+      </ul>
+      <h4>加九和弦 add9</h4>
+      <ul>
+        <li><b>add9</b>：在大三和弦上加一个九音（如 Cadd9＝C E G D），听感温暖、流行。</li>
+        <li>很多流行歌前奏都用 Cadd9 代替 C。</li>
+      </ul>
+      <h4>转位和弦（斜杠和弦）</h4>
+      <ul>
+        <li><b>C/E</b>：C 和弦以 E 为低音；<b>G/B</b>：G 和弦以 B 为低音。</li>
+        <li>作用是让低音「走得更顺」，弹唱时很常用。</li>
+      </ul>
+      <div class="note">新手先认识这几种即可，具体按法到和弦图里查，或后续慢慢加。</div>
+    </div>
+  </details>
+
+  <details class="card">
     <summary><span class="tag">核心</span>和弦级数 与 功能<span class="arrow">▶</span></summary>
     <div class="body">
       <p>在一个调里，从每个音上建一个三和弦，从 1 级排到 7 级。以 C 大调为例：</p>
@@ -486,6 +526,22 @@
       <p>7 级是<b>减三和弦</b>（如 C 调里的 Bdim），音色<b>紧张、不稳定</b>，有强烈「想解决到 1 级」的倾向。</p>
       <p>因为它太「不稳」了，所以很少作为停留和弦，通常只作为<b>经过和弦</b>短暂出现（比如 1-7-6 这样顺下来）。</p>
       <div class="note">同理，你在流行歌里几乎看不到单独停在 Bdim 上——它总是急着「回」到 C。这就是为什么新手弹唱基本用不到 7 级。</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="tag">进阶</span>终止式：为什么「回家」这么好听 ➕<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>「终止式」就是和弦进行到「结束/半结束」时的固定套路，是配和弦的「句号」。</p>
+      <table>
+        <tr><th>终止式</th><th>进行</th><th>感觉</th></tr>
+        <tr><td><b>正格终止</b></td><td>Ⅴ→Ⅰ（G→C）</td><td>最强有力的「结束」，最常用</td></tr>
+        <tr><td><b>变格终止</b></td><td>Ⅳ→Ⅰ（F→C）</td><td>「阿门」终止，教堂感</td></tr>
+        <tr><td><b>半终止</b></td><td>停在Ⅴ（G）</td><td>「话没说完」，悬着</td></tr>
+        <tr><td><b>假终止</b></td><td>Ⅴ→Ⅵ（G→Am）</td><td>「假结束」，突然拐弯</td></tr>
+      </table>
+      <div class="callout">这就是为什么 <b>G7 → C</b> 听起来那么「回家」——它是<b>正格终止</b>，音乐里最有力的结束。</div>
+      <div class="note">配和弦时，句尾用「终止式」收尾，整首歌就有了「起承转合」。</div>
     </div>
   </details>
 
@@ -543,15 +599,22 @@
   <details class="card">
     <summary><span class="tag">核心</span>记住指板音<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>标准调弦，6 根弦的空弦音（从最粗到最细）：</p>
-      <div class="callout"><b>E A D G B E</b>（6弦→1弦，即 <code>3 6 2 5 7 3</code>）</div>
-      <h4>怎么记</h4>
+      <p>标准调弦，6 根弦的空弦音（从最粗的 6 弦到最细的 1 弦）：</p>
+      <div class="callout"><b>E A D G B E</b>（6→1 弦，简谱唱 <code>3 6 2 5 7 3</code>）</div>
+      <h4>为什么必须记</h4>
+      <p>记住指板音是<b>脱谱的第一前提</b>——你才知道自己按的是什么、根音在哪、音阶怎么走。死记和弦图不记指板音，永远只能当「三品战士」。</p>
+      <h4>怎么记（分三步）</h4>
       <ul>
-        <li>先记空弦音，然后<b>每往高把位走一品就升半音</b>。</li>
-        <li>重点记 <b>6 弦（E）和 5 弦（A）</b>上的音——因为和弦根音大多落在低音弦。</li>
-        <li><b>5 品</b>和 <b>12 品</b>是参照点：12 品＝空弦音的高八度，整个指板在此「循环」。</li>
+        <li><b>第一步</b>：先记 6 根空弦音 <code>E A D G B E</code>（谐音口诀：<b>「一只大公鸡，背着二胡走」</b>）。</li>
+        <li><b>第二步</b>：记住「<b>每往高把位走一品就升半音</b>」，这样任意品都能推出来。</li>
+        <li><b>第三步</b>：重点记 <b>6 弦（E）和 5 弦（A）</b>——和弦根音大多落在低音弦，记住它们能快速定位根音。</li>
       </ul>
-      <div class="note">记住指板音是脱谱的第一前提——你才知道自己按的是什么、根音在哪。</div>
+      <h4>两个参照点</h4>
+      <ul>
+        <li><b>5 品</b>＝下一根弦的空弦音（如 6 弦 5 品＝A，等于 5 弦空弦）。</li>
+        <li><b>12 品</b>＝空弦音的高八度，整个指板在此「循环」。</li>
+      </ul>
+      <div class="note">练习：每天随机指一个品，说出它的音名，练到 3 秒内反应出来。</div>
       <h4>指板音全图（0–12 品，绿色＝C 音）</h4>
       <div id="fretboard"></div>
     </div>
@@ -560,24 +623,40 @@
   <details class="card">
     <summary><span class="tag">核心</span>音阶指型：mi 指型 与 la 指型<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>把音阶按「把位」分成几个固定形状，常见五种（sol、la、si、re、mi 指型，对应 CAGED）。入门先掌握两个：</p>
+      <p>把音阶按「把位」分成几个固定形状，常见五种（sol、la、si、re、mi 指型，对应 CAGED）。<b>入门先掌握两个：mi 指型 和 la 指型</b>。</p>
+      <h4>两个指型从哪起步</h4>
       <ul>
-        <li><b>mi 指型</b>：从 6 弦第 12 品（E，唱 mi）起步</li>
-        <li><b>la 指型</b>：从 5 弦第 12 品（A，唱 la）起步</li>
+        <li><b>mi 指型</b>：从 <b>6 弦第 12 品</b>（E，唱 mi）起步，主音在 6 弦。</li>
+        <li><b>la 指型</b>：从 <b>5 弦第 12 品</b>（A，唱 la）起步，主音在 5 弦。</li>
+      </ul>
+      <h4>怎么练</h4>
+      <ul>
+        <li>先慢慢爬，<b>边弹边唱音名/唱名</b>，把「位置」和「声音」对上。</li>
+        <li>熟练后移到别的调（比如从 G 起步，指型不变、位置变了）。</li>
       </ul>
       <div class="callout"><b>mi 型、la 型会了就够入门，不要痴迷背指型</b>。真正重要的是理解<b>音程关系</b>——上五下四比会指型更重要。</div>
+      <h4>la 指型指板图（主音 C 在 5 弦 3 品，绿色＝主音 do）</h4>
+      <div id="scale-la"></div>
+      <h4>mi 指型指板图（主音 C 在 6 弦 8 品，绿色＝主音 do）</h4>
+      <div id="scale-mi"></div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">核心</span>CAGED 系统<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>把 <b>C、A、G、E、D</b> 五个开放和弦形状，沿指板<b>向上平移（用横按补空弦）</b>，就能在任意把位弹出任意和弦。</p>
+      <p>把 <b>C、A、G、E、D</b> 五个开放和弦形状，沿指板<b>向上平移（用食指横按补上原来的空弦）</b>，就能在任意把位弹出任意和弦。</p>
+      <h4>举例（E 形状 → F）</h4>
+      <p>E 和弦是开放和弦（含空弦）。把整个 E 手型<b>整体上移 1 品</b>，用食指横按第 1 品（代替原来的空弦），就得到了 <b>F</b>——这就是最常见的「大横按 F」。</p>
+      <h4>五个形状怎么覆盖全指板</h4>
       <ul>
-        <li>C 形状上移 2 品 ＝ D；E 形状上移 1 品 ＝ F；A 形状上移 2 品 ＝ B ……</li>
-        <li>五个形状把整个指板「拼满」，所以叫 CAGED。</li>
+        <li>C 形状上移 2 品 ＝ D；A 形状上移 2 品 ＝ B；E 形状上移 1 品 ＝ F ……</li>
+        <li>五个形状在指板上<b>首尾相接、拼满整个指板</b>，所以叫 CAGED。</li>
       </ul>
       <div class="callout">掌握 CAGED ＝ <b>全指板任意和弦</b>。这是「脱离三品战士」「不再依赖变调夹」的钥匙。</div>
+      <div class="note">下一个卡片有五个形状的详细图解，配合看更容易懂。</div>
+      <h4>C 和弦的根音在全指板（绿色圆＝C 音，标注对应 CAGED 形状）</h4>
+      <div id="caged-map"></div>
     </div>
   </details>
 
@@ -604,24 +683,34 @@
   <details class="card">
     <summary><span class="tag">进阶</span>和弦走向（和弦进行）<span class="arrow">▶</span></summary>
     <div class="body">
-      <p>一组和弦按固定顺序循环，构成歌曲的和声骨架，就是<b>和弦走向</b>。</p>
+      <p>一组和弦按固定顺序循环，构成歌曲的和声骨架，就是<b>和弦走向</b>（也叫和弦进行）。</p>
+      <h4>为什么要用级数记走向</h4>
+      <p>用「级数」而不是「和弦名」记走向，换调时级数不变，只换和弦名。这是脱谱和转调的核心。</p>
+      <h4>几套万能走向</h4>
       <ul>
-        <li>最经典：<b>1-5-6-4</b>（C-G-Am-F）、<b>1-6-4-5</b>（C-Am-F-G）</li>
-        <li>卡农进行：<b>1-5-6-3-4-1-4-5</b></li>
-        <li><b>功能谱</b>就是记「级数」而不是具体和弦名——换调时级数不变。</li>
+        <li><b>1-6-4-5</b>（C-Am-F-G）：流行歌万能，最常用。</li>
+        <li><b>1-5-6-4</b>（C-G-Am-F）：欧美流行常见。</li>
+        <li><b>1-6-2-5</b>（C-Am-Dm-G）：抒情歌常用。</li>
+        <li><b>卡农进行 1-5-6-3-4-1-4-5</b>（C-G-Am-Em-F-C-F-G）：经典中的经典。</li>
+        <li><b>1-4-5</b>（C-F-G）：最基础的三和弦走向。</li>
       </ul>
-      <div class="note">脱谱弹唱的本质就是「听出/记住这首歌的和弦走向」，而不是背一个个和弦名。</div>
+      <div class="note">这些走向在「曲谱练习」章节里都有谱子和指法图，可以直接练。功能谱就是只记级数的谱。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">进阶</span>如何配和弦<span class="arrow">▶</span></summary>
     <div class="body">
+      <p>给一段旋律配和弦，核心思路是「<b>用调内和弦去套，看旋律音落在哪</b>」。</p>
+      <h4>三步配和弦</h4>
       <ul>
-        <li>先确定调，用<b>调内和弦（级数）</b>去套。</li>
-        <li>看旋律音落在哪个和弦音上，优先用包含该音的和弦。</li>
-        <li>优先用 1、4、5（主、下属、属），再补 6、2、3 过渡。</li>
+        <li><b>第一步 定调</b>：先确定这段旋律是什么调（找主音 do）。</li>
+        <li><b>第二步 套级数</b>：优先用 1、4、5（主、下属、属），再补 6、2、3 过渡。</li>
+        <li><b>第三步 对旋律音</b>：看每小节旋律音落在哪个和弦音上，优先用包含该音的和弦。</li>
       </ul>
+      <h4>例子</h4>
+      <p>小星星（C 调）开头是 C C G G A A G。第一小节主音是 C，就用 <b>C（Ⅰ级）</b>；到 G G 处用 <b>G（Ⅴ级）</b>；A A G 可以用 <b>C 或 Am</b>。这就是最基础的配和弦。</p>
+      <div class="note">新手先别追求「高级和声」，先把 1-4-5-6 用熟，能套大部分歌。</div>
     </div>
   </details>
 
@@ -629,11 +718,18 @@
     <summary><span class="tag">核心</span>转调：任意调自由转换<span class="arrow">▶</span></summary>
     <div class="body">
       <p>转调＝把整首歌的和弦与旋律整体移到另一个调。</p>
+      <h4>三种转调方法</h4>
       <ul>
         <li><b>级数思维</b>：1-6-4-5 在任何调都是 1-6-4-5，只换具体和弦名。</li>
-        <li><b>CAGED 思维</b>：移动把位即可。</li>
+        <li><b>CAGED 思维</b>：移动把位即可（同一个形状往上挪）。</li>
         <li><b>服务人声</b>：唱不上去就降调，唱不下去就升调，找到适合自己的调。</li>
       </ul>
+      <h4>例子：1-6-4-5 从 C 调到 G 调</h4>
+      <table>
+        <tr><th>C 调</th><td>C</td><td>Am</td><td>F</td><td>G</td></tr>
+        <tr><th>G 调</th><td>G</td><td>Em</td><td>C</td><td>D</td></tr>
+      </table>
+      <p>级数没变（还是 1-6-4-5），只是和弦名换了。</p>
       <div class="callout">整套课的终极目标就是「任意调式转换 + 服务人声」，实现自由弹唱随意转调。</div>
     </div>
   </details>
@@ -642,9 +738,11 @@
     <summary><span class="tag">补充</span>首调 vs 固定调 ➕<span class="arrow">▶</span></summary>
     <div class="body">
       <ul>
-        <li><b>固定调</b>：音名绝对不变，C 永远是 C。</li>
+        <li><b>固定调</b>：音名绝对不变，C 永远是 C，do 永远是 C。</li>
         <li><b>首调</b>：唱名随调移动，C 调里 C 唱 do，G 调里 G 唱 do。</li>
       </ul>
+      <h4>例子</h4>
+      <p>同一首歌，C 调时 C 唱 do；换成 G 调，G 唱 do（do 的位置变了，但旋律的「相对关系」没变）。</p>
       <div class="note">弹吉他弹唱多用<b>首调（级数）思维</b>——这正好和「和弦级数」衔接，是脱谱和转调的关键。</div>
     </div>
   </details>
@@ -655,9 +753,33 @@
       <p>变调夹夹在第 n 品，等于把空弦音<b>整体升高 n 个半音</b>。</p>
       <ul>
         <li>夹 2 品后，按 C 形状实际弹的是 D 调。</li>
-        <li>它让你用<b>简单的开放和弦形状</b>弹出不同的调。</li>
+        <li>它让你用<b>简单的开放和弦形状</b>弹出不同的调，不用学横按。</li>
       </ul>
+      <h4>例子</h4>
+      <p>想唱 D 调但只会 C 调指法？夹 2 品，按 C 和弦形状，出来的就是 D 和弦。</p>
       <div class="callout">变调夹是拐杖，<b>别依赖它</b>。真正会用 CAGED 转调，才能彻底摆脱变调夹。</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="tag">基础</span>音符时值：全音符到十六分音符 ➕<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>音符的「时值」就是它<b>持续多久</b>。以四分音符为一拍（4/4 拍里最常见）：</p>
+      <table>
+        <tr><th>名称</th><th>时值（四分=1拍）</th><th>写法</th></tr>
+        <tr><td>全音符</td><td>4 拍</td><td>空心椭圆</td></tr>
+        <tr><td>二分音符</td><td>2 拍</td><td>空心+竖线</td></tr>
+        <tr><td>四分音符</td><td>1 拍</td><td>实心+竖线</td></tr>
+        <tr><td>八分音符</td><td>半拍</td><td>实心+竖线+一条尾</td></tr>
+        <tr><td>十六分音符</td><td>1/4 拍</td><td>实心+竖线+两条尾</td></tr>
+      </table>
+      <h4>附点、休止符、延音线</h4>
+      <ul>
+        <li><b>附点</b>：音符后加一个点，时值加一半（如附点四分音符＝1.5 拍）。</li>
+        <li><b>休止符</b>：表示停顿，时值和对应音符一样长。</li>
+        <li><b>延音线</b>：把两个同音连起来，时值相加（弹一下、持续两拍）。</li>
+      </ul>
+      <div class="note">记住关系：<b>1 全＝2 二分＝4 四分＝8 八分＝16 十六分</b>。看懂这个，谱上的节奏就不会错。</div>
     </div>
   </details>
 
@@ -696,23 +818,42 @@
   <details class="card">
     <summary><span class="tag">基础</span>吉他构造 与 如何选琴 ➕<span class="arrow">▶</span></summary>
     <div class="body">
+      <h4>主要部位</h4>
       <ul>
-        <li>主要部位：琴头（弦钮）、琴颈（品丝）、琴身（音孔/拾音器）、琴桥。</li>
-        <li>选琴看三点：<b>弦距</b>（按着不费劲）、<b>音准</b>、<b>手感</b>。</li>
-        <li>新手优先选弦距低、好按的琴；尺寸按身高选（常见 36/38/40/41 寸）。</li>
+        <li><b>琴头</b>：弦钮（调音用）</li>
+        <li><b>琴颈</b>：品丝（金属条，决定音高）</li>
+        <li><b>琴身</b>：音孔（木吉他发声）/ 拾音器（电吉他）</li>
+        <li><b>琴桥</b>：固定琴弦的下端</li>
       </ul>
+      <h4>选琴看三点</h4>
+      <ul>
+        <li><b>弦距</b>（最重要）：琴弦离品丝的高度，越低越好按、越省力。</li>
+        <li><b>音准</b>：按每一品音都要准（可让琴行调好）。</li>
+        <li><b>手感</b>：拿起来舒服，按弦不硌手。</li>
+      </ul>
+      <div class="note">新手优先选<b>弦距低、好按</b>的琴；尺寸按身高选（常见 36/38/40/41 寸，成人一般 40-41 寸）。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">基础</span>持琴姿势 与 左右手手型 ➕<span class="arrow">▶</span></summary>
     <div class="body">
+      <h4>持琴</h4>
       <ul>
-        <li>琴身凹槽架在右腿（或左腿古典式），琴颈略向上。</li>
-        <li><b>左手</b>：拇指抵琴颈后侧，手指垂直按弦、用指尖，靠近品丝按。</li>
-        <li><b>右手</b>：手腕放松，拇指负责低音弦，食指中指无名指负责高音弦。</li>
+        <li>琴身凹槽架在<b>右腿</b>（或左腿古典式），琴颈略向上倾斜。</li>
+        <li>琴体轻贴身体，右手自然放在音孔上方。</li>
       </ul>
-      <div class="note">姿势一开始就要对，坏习惯后期很难改。</div>
+      <h4>左手</h4>
+      <ul>
+        <li>拇指抵在<b>琴颈后侧</b>，不要从上面包住。</li>
+        <li>手指<b>垂直</b>按弦、用<b>指尖</b>，尽量靠近品丝（省力又不容易出杂音）。</li>
+      </ul>
+      <h4>右手</h4>
+      <ul>
+        <li>手腕放松，<b>拇指负责低音弦（4-6弦）</b>，<b>食指/中指/无名指负责高音弦（1-3弦）</b>。</li>
+      </ul>
+      <div class="callout">姿势一开始就要对，坏习惯后期很难改，还会导致手疼、杂音。</div>
+      <div class="note">⚠️ <b>常见错误</b>：按弦出杂音，九成是因为没垂直按、没靠近品丝、或用指腹（应该用指尖）。</div>
     </div>
   </details>
 
@@ -720,10 +861,21 @@
     <summary><span class="tag">基础</span>调音：标准 EADGBE ➕<span class="arrow">▶</span></summary>
     <div class="body">
       <p>标准调弦，从 6 弦到 1 弦（粗到细）：<b>E A D G B E</b>。</p>
+      <h4>三种调音方法</h4>
       <ul>
-        <li>可用调音器（App 或夹式）、音叉、或用「5 品对照法」。</li>
-        <li>5 品对照：按 6 弦 5 品 ＝ 5 弦空弦；按 5 弦 5 品 ＝ 4 弦空弦；按 4 弦 5 品 ＝ 3 弦空弦；按 3 弦 4 品 ＝ 2 弦空弦；按 2 弦 5 品 ＝ 1 弦空弦。</li>
+        <li><b>调音器</b>（最简单）：用手机 App 或夹式调音器，看指针调准。</li>
+        <li><b>音叉/参照音</b>：对着标准音调。</li>
+        <li><b>5 品对照法</b>（没工具时用）：</li>
       </ul>
+      <table>
+        <tr><th>按这里</th><th>＝ 这根空弦</th></tr>
+        <tr><td>6 弦 5 品</td><td>5 弦空弦</td></tr>
+        <tr><td>5 弦 5 品</td><td>4 弦空弦</td></tr>
+        <tr><td>4 弦 5 品</td><td>3 弦空弦</td></tr>
+        <tr><td>3 弦 4 品</td><td>2 弦空弦</td></tr>
+        <tr><td>2 弦 5 品</td><td>1 弦空弦</td></tr>
+      </table>
+      <div class="note">每次练琴前都先调音，音不准会练坏耳朵。</div>
     </div>
   </details>
 
@@ -731,16 +883,38 @@
     <summary><span class="tag">核心</span>怎么看吉他谱<span class="arrow">▶</span></summary>
     <div class="body">
       <h4>六线谱（TAB）</h4>
+      <p>6 条线代表 6 根弦：<b>最上面是 1 弦（最细）</b>，最下面是 6 弦（最粗）。</p>
       <ul>
-        <li>6 条线代表 6 根弦，<b>最上面是 1 弦（最细）</b>，最下面是 6 弦（最粗）。</li>
-        <li>线上的数字＝按第几品；0＝空弦；×＝不弹。</li>
+        <li>线上的<b>数字＝按第几品</b>；<b>0＝空弦</b>；<b>×＝不弹</b>。</li>
+        <li>数字从上往下读，就是弹奏顺序。</li>
       </ul>
+      <div class="callout">六线谱是「指法谱」——它告诉你<b>按哪里</b>，但不直接告诉你<b>是什么音</b>。想脱谱，要配合记住指板音。</div>
       <h4>和弦谱 / 功能谱</h4>
       <ul>
         <li>歌词上方标和弦名（C、Am…），按节奏换。</li>
-        <li>功能谱标的是<b>级数</b>（Ⅰ、Ⅳ、Ⅴ…），换调更方便。</li>
+        <li><b>功能谱</b>标的是<b>级数</b>（Ⅰ、Ⅳ、Ⅴ…），换调更方便。</li>
       </ul>
-      <div class="note">从谱上<b>找调</b>：看出现的和弦集合，反推它属于哪个调（新手先看开头结尾和弦，通常是主和弦）。</div>
+      <div class="note">从谱上<b>找调</b>：看开头结尾和弦，通常是主和弦（如 C 调开头结尾常是 C）。</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="tag">补充</span>五线谱基础（快速入门）➕<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>吉他主要用六线谱，但懂一点五线谱，能看的谱子面更广。</p>
+      <h4>五条线和四个间</h4>
+      <p>五线谱有<b>5 条线</b>（从下往上数 1-5 线）和 4 个<b>间</b>，音高从下往上越来越高。</p>
+      <h4>高音谱号</h4>
+      <p>吉他记谱用<b>高音谱号</b>（写在最前面，画得像「G」的那个符号）。</p>
+      <h4>几个关键音的位置</h4>
+      <ul>
+        <li><b>下加一线</b>＝中央 C（do）</li>
+        <li>五条线从下往上依次是：<b>E G B D F</b>（口诀「Every Good Boy Does Fine」）</li>
+        <li>四个间从下往上依次是：<b>F A C E</b>（正好拼成单词 FACE「脸」）</li>
+      </ul>
+      <h4>升降号</h4>
+      <p>谱号后面写的 <code>#</code> 或 <code>b</code> 是「调号」，表示整首曲子这些音都要升/降（对应五度圈那节）。</p>
+      <div class="note">重点：会读<b>下加一线=C</b>、线=E G B D F、间=F A C E，基本就能慢慢读五线谱了。</div>
     </div>
   </details>
 
@@ -748,29 +922,39 @@
     <summary><span class="tag">右手</span>分解节奏型：53231323<span class="arrow">▶</span></summary>
     <div class="body">
       <p>这是 C 和弦最经典的分解弹法。数字是<b>弦号</b>（不是手指、不是品位）：</p>
-      <div class="callout"><b>5-3-2-3-1-3-2-3</b> ＝ 弹 5 弦、3 弦、2 弦、3 弦、1 弦、3 弦、2 弦、3 弦。</div>
+      <div class="callout"><b>5-3-2-3-1-3-2-3</b> ＝ 依次弹 5弦、3弦、2弦、3弦、1弦、3弦、2弦、3弦。</div>
       <ul>
         <li>5 弦是 A 弦，正是 C 和弦的<b>根音弦</b>（根音在第 5 弦）。</li>
-        <li>这个型可以类推到其它和弦：根音在 6 弦就用 6-3-2-3…，根音在 5 弦就用 5-3-2-3…。</li>
+        <li>规律：<b>第一个数字是根音弦</b>，后面是固定的 3-2-3-1-3-2-3。</li>
       </ul>
+      <h4>类推到其它和弦</h4>
+      <ul>
+        <li>根音在 6 弦（如 G、E、F）→ 用 <b>6-3-2-3-1-3-2-3</b>。</li>
+        <li>根音在 5 弦（如 C、Am、Dm）→ 用 <b>5-3-2-3-1-3-2-3</b>。</li>
+      </ul>
+      <div class="note">练法：先慢慢弹，每下都清晰，再加速。这是弹唱最常用的伴奏型。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">右手</span>扫弦：怎么扫才好听<span class="arrow">▶</span></summary>
     <div class="body">
-      <h4>动作</h4>
+      <h4>动作要领</h4>
       <ul>
         <li>下扫用拨片（或指甲背面），上扫用拨片（或指肚）。</li>
-        <li>手臂放松，用<b>手腕</b>带动，不要整条手臂甩。</li>
+        <li><b>手臂放松，用手腕带动</b>，不要整条手臂甩。</li>
+        <li>拨片与弦面呈小角度划过，不要插得太深。</li>
       </ul>
-      <h4>好听的因素</h4>
+      <h4>好听的三要素</h4>
       <ul>
-        <li><b>重音清晰</b>：第一拍重音下扫。</li>
+        <li><b>重音清晰</b>：第一拍重音下扫（这是灵魂）。</li>
         <li><b>节奏稳</b>：跟着鼓点，尤其底鼓。</li>
-        <li><b>音量均匀</b>：每一下力度一致。</li>
+        <li><b>音量均匀</b>：每一下力度一致，别忽大忽小。</li>
       </ul>
-      <p>常用节奏型（以 4/4 为例）：<b>下 · 下上 · 上下上</b>（符号：↓ ↓↑ ↑↓↑）。</p>
+      <h4>常用节奏型（4/4）</h4>
+      <p class="mono"><b>↓</b> ↓↑ ↑↓↑（流行） · <b>↓</b> ↓↑ ↓ ↓↑（民谣） · <b>↓</b>↑ ↓↑ ↓↑ ↓↑（摇滚）</p>
+      <div class="callout">扫弦好听的核心不是动作花哨，而是<b>重音清晰 + 节奏稳 + 跟鼓点</b>。先把最基础的练稳。</div>
+      <div class="note">⚠️ <b>常见错误</b>：整条手臂甩着扫（应该只动手腕）、音量忽大忽小、抢拍。跟节拍器慢练能解决。</div>
     </div>
   </details>
 
@@ -781,8 +965,10 @@
         <li><b>薄拨片</b>（0.5mm 以下）：适合扫弦，音色轻快。</li>
         <li><b>中厚</b>（0.6–0.8mm）：通用，扫弦+分解都行。</li>
         <li><b>厚拨片</b>（0.9mm+）：适合 solo、单音，音色实。</li>
-        <li>握法：拇指和食指捏住，露出拨片尖端 2–3mm，其余手指自然弯曲。</li>
       </ul>
+      <h4>握法</h4>
+      <p>拇指和食指捏住，露出拨片尖端 2–3mm，其余手指自然弯曲，手腕放松。</p>
+      <div class="note">新手建议从 0.6–0.7mm 的中厚拨片入门，扫弦和分解都能兼顾。</div>
     </div>
   </details>
 
@@ -823,13 +1009,17 @@
   <details class="card">
     <summary><span class="tag">左手</span>什么时候换和弦 + 转换技巧<span class="arrow">▶</span></summary>
     <div class="body">
+      <h4>四大转换技巧</h4>
       <ul>
-        <li><b>保留指</b>：两个和弦共用相同位置的手指，换时不松开。</li>
-        <li><b>先按根音</b>：优先把根音（低音弦）按到位。</li>
+        <li><b>保留指</b>：两个和弦共用相同位置的手指，换时不松开（如 C→Am 都按 2 弦 1 品）。</li>
+        <li><b>先按根音</b>：优先把根音（低音弦）按到位，其它手指再跟上。</li>
         <li><b>提前准备</b>：换前一个和弦时，手指已在「去的路上」。</li>
-        <li><b>慢练</b>：先分解慢速练转换，再加速。</li>
+        <li><b>慢练</b>：先分解慢速练转换，再加速，追求「准」再追求「快」。</li>
       </ul>
-      <div class="note">换和弦的时机＝看谱上标注的位置，通常是每小节或每两拍换一次。</div>
+      <h4>什么时候换</h4>
+      <p>看谱上标注的位置，通常是<b>每小节或每两拍</b>换一次。换的瞬间在<b>上一拍结束时</b>就要开始移动手指。</p>
+      <div class="note">练法：两个和弦来回切换，用节拍器，从 60 速度开始，每次加 5，练到 100 不出错。</div>
+      <div class="callout">⚠️ <b>常见错误</b>：换和弦时手指抬得太高、先松再找。正确做法是手指贴着弦「平移」，保留指不动。</div>
     </div>
   </details>
 
@@ -841,29 +1031,39 @@
         <li>常用手法：<b>击弦、勾弦、滑音</b>过渡到下一个和弦。</li>
         <li>从「和弦内音」里挑装饰音最安全（不跑调）。</li>
       </ul>
+      <div class="note">新手先学「万能和弦加花」：在换和弦前，用勾弦/击弦带一个装饰音进去，立马好听很多。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">实战</span>弹和唱如何结合（解决节奏配合问题）<span class="arrow">▶</span></summary>
     <div class="body">
+      <h4>三步练习法</h4>
       <ul>
-        <li>先把<b>和弦转换练熟</b>，再开口唱。</li>
-        <li>先只弹<b>每小节第一拍</b> + 唱，再逐步加满节奏型。</li>
-        <li>唱和弹的<b>重音要对齐</b>，尤其句首和换和弦处。</li>
+        <li><b>第一步</b>：先把<b>和弦转换练熟</b>（能闭眼换），再开口唱。</li>
+        <li><b>第二步</b>：先只弹<b>每小节第一拍</b> + 唱，再逐步加满节奏型。</li>
+        <li><b>第三步</b>：唱和弹的<b>重音要对齐</b>，尤其句首和换和弦处。</li>
       </ul>
       <div class="callout">新手常见问题：一唱就乱。解决思路＝<b>降低弹的复杂度</b>，先保唱，再补弹。</div>
+      <div class="note">关键：弹是「背景」，唱是「主角」。先让唱站稳，再让弹跟上。</div>
+      <div class="note">✅ <b>自测</b>：能完整弹唱一首歌、不中断、不跑调、换和弦不卡，就算过关。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">实战</span>如何找到适合自己的调<span class="arrow">▶</span></summary>
     <div class="body">
+      <h4>没谱怎么找</h4>
       <ul>
-        <li><b>没谱</b>：用乐器找「主音」，唱出歌曲的 do，看它落在哪个音上。</li>
-        <li><b>有谱</b>：看谱上的调号/和弦，反推原调，再整体移到自己音域。</li>
-        <li><b>定自己的调</b>：最高音能唱上去、最低音能唱下去，就是适合你的调。</li>
+        <li>用乐器找「主音」：唱出歌曲的 do，在吉他上找到对应的音，就知道是什么调。</li>
       </ul>
+      <h4>有谱怎么找</h4>
+      <ul>
+        <li>看谱上的调号/和弦，反推原调，再整体移到自己音域。</li>
+      </ul>
+      <h4>定自己的调</h4>
+      <div class="callout">最高音能唱上去、最低音能唱下去，就是适合你的调。唱不上去就降调，唱不下去就升调。</div>
+      <div class="note">技巧：用变调夹或转调（CAGED），把歌移到你的音域，不用硬唱。</div>
     </div>
   </details>
 
@@ -891,17 +1091,21 @@
     <div class="body">
       <p>脱谱＝不看谱、凭记忆和手感弹唱。</p>
       <div class="callout"><b>实现脱谱的第一步：记根音 + 记和弦走向（级数）</b>。把每小节的根音串成一条线，把和弦名换成级数，你就抓到了歌曲的骨架。</div>
+      <h4>为什么记「级数」而不是「和弦名」</h4>
+      <p>因为级数在任何调里都一样。记 <b>1-6-4-5</b> 比记 C-Am-F-G 更有用——换调时直接套，不用重新背。</p>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">核心</span>如何找到和弦走向<span class="arrow">▶</span></summary>
     <div class="body">
+      <h4>三步找走向</h4>
       <ul>
-        <li>先确定调，用<b>级数</b>标注每个和弦（C=Ⅰ、Am=Ⅵ…）。</li>
-        <li>听出<b>低音（根音）的运动方向</b>，比听和弦本身更容易。</li>
-        <li>对照常见走向（1-5-6-4、1-6-4-5、卡农），大部分歌都逃不出这几套。</li>
+        <li><b>第一步</b>：先确定调，用<b>级数</b>标注每个和弦（C=Ⅰ、Am=Ⅵ…）。</li>
+        <li><b>第二步</b>：听出<b>低音（根音）的运动方向</b>，比听和弦本身更容易。</li>
+        <li><b>第三步</b>：对照常见走向（1-5-6-4、1-6-4-5、卡农），大部分歌都逃不出这几套。</li>
       </ul>
+      <div class="note">技巧：先听根音，再判断它是几级（根音是 do 就是Ⅰ，是 la 就是Ⅵ）。</div>
     </div>
   </details>
 
@@ -914,6 +1118,7 @@
         <li>用 <b>CAGED</b> 在任意把位弹同一和弦。</li>
         <li>记住<b>指板音</b>，知道自己在按什么。</li>
       </ul>
+      <div class="callout">检验标准：同一个 C 和弦，你能不能在指板<b>3 个以上不同位置</b>弹出来？能，就脱离了前三品。</div>
     </div>
   </details>
 
@@ -924,6 +1129,7 @@
         <li>前奏通常是主旋律或和弦琶音，转调后<b>整体移到新调</b>。</li>
         <li>用<b>级数思维</b>：前奏如果弹的是 1-5-6-4 的琶音，换调后还是弹 1-5-6-4，只是和弦名变了。</li>
       </ul>
+      <div class="note">记前奏也记「级数 + 相对位置」，别记死品位，这样转调才不慌。</div>
     </div>
   </details>
 
@@ -935,6 +1141,7 @@
         <li>你只要听出<b>根音走向</b>，就能跟上他的和声框架。</li>
         <li>他用的「花活」是加花和装饰音，骨架还是那几套走向。</li>
       </ul>
+      <div class="note">所以别被花活唬住——把根音和走向听出来，你就知道他在弹什么了。</div>
     </div>
   </details>
 
@@ -973,6 +1180,7 @@
         <li>练习时<b>边弹边唱音名/唱名</b>，把位置和声音对上。</li>
       </ul>
       <div class="callout">会这两个型<b>就够了，不要痴迷</b>。重点是<b>音程关系</b>，不是背形状。</div>
+      <div class="note">练法：先在 C 调爬，熟了再移到 G、D 调（指型不变，起点变了）。</div>
     </div>
   </details>
 
@@ -984,17 +1192,47 @@
         <li>先在 1-2 根弦上推，再扩展到整个指板。</li>
         <li>配合 CAGED，把音阶铺满全指板。</li>
       </ul>
+      <div class="note">关键是理解<b>音程关系</b>，不是死记每个调的音阶。会推一个，就会推所有。</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><span class="tag">核心</span>五声音阶：即兴的「安全区」➕<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>五声音阶＝从大调音阶里<b>去掉 4（fa）和 7（si）</b>，剩下五个音：</p>
+      <div class="callout"><b>1 2 3 5 6</b>（do re mi sol la）</div>
+      <h4>为什么「怎么弹都不难听」</h4>
+      <p>因为去掉了 4 和 7，就<b>避开了「4-7」之间的增四度（三全音）</b>——这是音阶里最刺耳、最不协和的音程。没了它，随便怎么弹都和谐。</p>
+      <h4>C 大调五声音阶（在指板上）</h4>
+      <p>五个音：<b>C D E G A</b>。用 la 指型，主音 C 在 5 弦 3 品：</p>
+      <ul>
+        <li>5 弦 3 品（C，主音）、5 品（D）</li>
+        <li>4 弦 2 品（E）、5 品（G）</li>
+        <li>3 弦 2 品（A）、5 品（C）</li>
+        <li>2 弦 3 品（D）、5 品（E）</li>
+        <li>1 弦 3 品（G）、5 品（A）</li>
+      </ul>
+      <h4>怎么用</h4>
+      <ul>
+        <li>即兴 solo：在正确的调上，用五声音阶随便弹，都不会难听。</li>
+        <li>进阶：熟了之后加回 4 和 7，变成完整音阶，色彩更丰富。</li>
+      </ul>
+      <div class="note">先记牢五个音的位置，即兴就从「乱弹不跑调」开始。</div>
     </div>
   </details>
 
   <details class="card">
     <summary><span class="tag">核心</span>即兴 solo 与音阶的关系<span class="arrow">▶</span></summary>
     <div class="body">
+      <p>solo 的素材＝<b>调内音阶</b>（尤其五声音阶：1 2 3 5 6，去掉 4 和 7）。</p>
+      <h4>即兴三步</h4>
       <ul>
-        <li>solo 的素材＝<b>调内音阶</b>（尤其五声音阶：1 2 3 5 6，去掉 4 和 7）。</li>
-        <li>跟着和弦走，<b>落在和弦音上</b>最稳。</li>
-        <li>先学会在正确的调上「随便弹不跑调」，再追求旋律感。</li>
+        <li><b>第一步</b>：确定调，找到对应的音阶指型（mi 型或 la 型）。</li>
+        <li><b>第二步</b>：跟着和弦走，<b>落在和弦音上</b>最稳（换和弦时弹该和弦的音）。</li>
+        <li><b>第三步</b>：先学会在正确的调上「随便弹不跑调」，再追求旋律感。</li>
       </ul>
+      <div class="callout">新手即兴就用<b>五声音阶</b>（1 2 3 5 6）——它怎么弹都不难听，是即兴的「安全区」。</div>
+      <div class="note">进阶：往五声音阶里加 4 和 7，变成完整音阶，色彩更丰富。</div>
     </div>
   </details>
 
@@ -1014,6 +1252,7 @@
     <summary><span class="tag supp">补充</span>琶音（分解和弦美化）➕<span class="arrow">▶</span></summary>
     <div class="body">
       <p>把和弦音按顺序快速拨出，就是琶音。它是弹唱分解和指弹独奏之间的桥梁。</p>
+      <div class="note">练法：拿一个和弦，从低音到高音依次拨响，再反过来（下行），手型保持。</div>
     </div>
   </details>
 
@@ -1026,6 +1265,7 @@
         <li><b>击弦</b>（hammer-on）：手指快速敲击品丝发声。</li>
         <li><b>推弦</b>：按弦后向上推，把音推高。</li>
       </ul>
+      <div class="note">这四个是 solo 和加花最常用的，配合「加花」章节一起练。</div>
     </div>
   </details>
 
@@ -1105,6 +1345,15 @@
       <p>每天 30–60 分钟，按阶段推进。打勾记录进度（保存在浏览器本地）。</p>
       <ul class="checklist" id="checklist"></ul>
       <button onclick="resetChecklist()" style="background:var(--btn-bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;">清空进度</button>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><span class="tag">计划</span>分阶段打卡计划<span class="arrow">▶</span></summary>
+    <div class="body">
+      <p>按阶段系统推进，完成一项打勾（进度存本地）。建议每周完成一个阶段，不要跳步。</p>
+      <div id="plan"></div>
+      <button onclick="resetPlan()" style="background:var(--btn-bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;">清空计划进度</button>
     </div>
   </details>
 </section>
@@ -1268,9 +1517,9 @@ function chordSVG(name, data){
     const n = Number(c);
     const x = leftPad + s*strW;
     const y = topPad + (n-0.5)*fretH;
-    svg += `<circle class="svg-dot" cx="${x}" cy="${y}" r="8.5"/>`;
+    svg += `<circle class="svg-dot fdot" cx="${x}" cy="${y}" r="8.5" style="--d:${s*0.15}s"/>`;
     if(data.fingers && data.fingers[s]){
-      svg += `<text class="svg-finger" x="${x}" y="${y+4}" font-size="12" text-anchor="middle">${data.fingers[s]}</text>`;
+      svg += `<text class="svg-finger fdot" x="${x}" y="${y+4}" font-size="12" text-anchor="middle" style="--d:${s*0.15}s">${data.fingers[s]}</text>`;
     }
   }
   if(data.barre){
@@ -1282,7 +1531,7 @@ function chordSVG(name, data){
     svg += `<text class="svg-pos" x="${x}" y="${topPad+fretH*fretCount+14}" font-size="10" text-anchor="middle">${6-s}</text>`;
   }
   svg += `</svg>`;
-  return `<div class="chord-card">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
+  return `<div class="chord-card" onclick="animateChord(this)" title="点击看指法" style="cursor:pointer">${svg}<div class="cn">${name}</div><div class="cd">${frets}</div></div>`;
 }
 
 /* 横版指板图：展示和弦在指板上的形状 */
@@ -1361,6 +1610,132 @@ function renderChordChart(){
   return html;
 }
 document.getElementById('chord-chart').innerHTML = renderChordChart();
+
+/* ===== 分阶段打卡计划 ===== */
+const planData = [
+  { stage: "阶段一 · 入门准备（第 1 周）", tasks: [
+    "认识吉他构造，学会标准调弦 EADGBE",
+    "正确持琴姿势 + 右手拨弦练习",
+    "爬格子（左右手协调）每天 10 分钟",
+    "记住 E-F、B-C 两对半音",
+    "理解十二平均律 + 全半关系",
+    "背熟大调公式「全全半全全全半」",
+    "练熟 53231323 分解型",
+  ]},
+  { stage: "阶段二 · 基础乐理（第 2 周）", tasks: [
+    "记住 C 大调 1-7 级和弦",
+    "理解三和弦（大/小/减）的构成",
+    "理解根音、级数、功能",
+    "记住指板空弦音 + 5/12 品参照",
+    "看懂六线谱、和弦谱",
+    "理解 CAGED 五个形状",
+  ]},
+  { stage: "阶段三 · 和弦与右手（第 3 周）", tasks: [
+    "按准 C G Am Em Dm E A D 和弦",
+    "攻克大横按 F、Bm",
+    "练顺 C-G-Am-Em 和弦转换",
+    "掌握扫弦「下 下上 上下上」",
+    "拨片正确握法 + 扫弦",
+  ]},
+  { stage: "阶段四 · 弹唱实战（第 4 周）", tasks: [
+    "弹唱第一首简单歌曲",
+    "学会用变调夹找适合自己的调",
+    "掌握 C-Am-F-G（1-6-4-5）走向",
+    "练 1-5-6-4、卡农走向",
+    "弹和唱节奏配合练顺",
+  ]},
+  { stage: "阶段五 · 脱谱与转调（第 5-6 周）", tasks: [
+    "练熟 mi 型、la 型音阶",
+    "练习根音走向听辨（脱谱第一步）",
+    "尝试高把位和弦，脱离前三品",
+    "五声音阶即兴（任意调）",
+    "手动扒谱一首歌（听根音→定调→套级数）",
+  ]},
+];
+function renderPlan(){
+  const container = document.getElementById('plan');
+  let html = '';
+  planData.forEach((p, si)=>{
+    html += `<h4 style="margin:18px 0 8px">${p.stage}</h4><ul class="checklist">`;
+    p.tasks.forEach((t, ti)=>{
+      const key = 'plan-'+si+'-'+ti;
+      html += `<li><input type="checkbox" id="${key}" ${localStorage.getItem(key)==='1'?'checked':''} onchange="togglePlan('${key}', this)"><span>${t}</span></li>`;
+    });
+    html += `</ul>`;
+  });
+  container.innerHTML = html;
+  planData.forEach((p, si)=>{
+    p.tasks.forEach((t, ti)=>{
+      const key = 'plan-'+si+'-'+ti;
+      const cb = document.getElementById(key);
+      if(cb && cb.checked) cb.nextElementSibling.classList.add('done');
+    });
+  });
+}
+function togglePlan(key, cb){
+  localStorage.setItem(key, cb.checked?'1':'0');
+  cb.nextElementSibling.classList.toggle('done', cb.checked);
+}
+function resetPlan(){
+  if(!confirm('确定清空打卡计划进度吗？')) return;
+  planData.forEach((p, si)=>p.tasks.forEach((_, ti)=>localStorage.removeItem('plan-'+si+'-'+ti)));
+  location.reload();
+}
+renderPlan();
+
+/* ===== 搜索 ===== */
+function searchTutorial(q){
+  q = q.trim().toLowerCase();
+  document.querySelectorAll('details.card').forEach(card=>{
+    card.style.display = (!q || card.textContent.toLowerCase().includes(q)) ? '' : 'none';
+  });
+  document.querySelectorAll('section.part').forEach(sec=>{
+    const hasVisible = [...sec.querySelectorAll('details.card')].some(c=>c.style.display !== 'none');
+    sec.style.display = (!q || hasVisible) ? '' : 'none';
+  });
+}
+
+/* ===== 收藏 ===== */
+function isFav(id){ return JSON.parse(localStorage.getItem('favs')||'[]').includes(id); }
+function renderFavList(){
+  const favs = JSON.parse(localStorage.getItem('favs')||'[]');
+  const list = document.getElementById('fav-list');
+  if(!list) return;
+  if(favs.length===0){ list.innerHTML=''; return; }
+  let html = '<div class="nav-part">我的收藏</div>';
+  favs.forEach(id=>{
+    const card = document.getElementById(id);
+    if(card){
+      const s = card.querySelector('summary');
+      let title = s.textContent;
+      const tag = s.querySelector('.tag'); if(tag) title = title.replace(tag.textContent,'');
+      title = title.replace(/[▶★☆]/g,'').trim();
+      html += `<a href="#${id}">★ ${title}</a>`;
+    }
+  });
+  list.innerHTML = html;
+}
+function toggleFav(id, btn){
+  let favs = JSON.parse(localStorage.getItem('favs')||'[]');
+  if(favs.includes(id)){ favs = favs.filter(x=>x!==id); btn.textContent='☆'; }
+  else { favs.push(id); btn.textContent='★'; }
+  localStorage.setItem('favs', JSON.stringify(favs));
+  renderFavList();
+}
+function initFavorites(){
+  document.querySelectorAll('details.card').forEach((card, i)=>{
+    if(!card.id) card.id = 'card-'+i;
+    const summary = card.querySelector('summary');
+    const btn = document.createElement('span');
+    btn.className = 'fav-btn';
+    btn.title = '收藏';
+    btn.textContent = isFav(card.id) ? '★' : '☆';
+    btn.onclick = (e)=>{ e.stopPropagation(); e.preventDefault(); toggleFav(card.id, btn); };
+    summary.appendChild(btn);
+  });
+  renderFavList();
+}
+initFavorites();
 
 /* ===== 练习清单 ===== */
 const checklistItems = [
@@ -1507,6 +1882,24 @@ const songs = {
       {s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:2},
     ]
   },
+  painter: {
+    title: "粉刷匠", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:1,f:3,d:1},{s:1,f:0,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},
+      {s:2,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:1,f:3,d:1},
+      {s:1,f:3,d:1},{s:1,f:0,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:1,f:3,d:1},{s:1,f:0,d:1},{s:2,f:1,d:1},
+      {s:2,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},
+    ]
+  },
+  doll: {
+    title: "洋娃娃和小熊跳舞", type: "tab", key: "C", diff: 1,
+    notes: [
+      {s:2,f:1,d:1},{s:2,f:3,d:1},{s:1,f:0,d:1},{s:1,f:1,d:1},
+      {s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:3,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},
+      {s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:1,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},
+      {s:1,f:0,d:1},{s:1,f:0,d:1},{s:1,f:0,d:1},{s:2,f:3,d:1},{s:2,f:1,d:1},
+    ]
+  },
 };
 
 /* ===== 六线谱渲染器 ===== */
@@ -1562,7 +1955,7 @@ function renderRhythm(rhythm){
 /* ===== 曲谱列表渲染 ===== */
 function renderSongList(){
   const container = document.getElementById('song-list');
-  const order = ['mary','tigers','twinkle','bee','london','happy','ode','rowboat','prog145','prog1645','prog1564','prog1625','prog6415','progcanon'];
+  const order = ['mary','tigers','twinkle','bee','london','happy','ode','rowboat','painter','doll','prog145','prog1645','prog1564','prog1625','prog6415','progcanon'];
   let html = '';
   order.forEach(id=>{
     const s = songs[id];
@@ -1684,6 +2077,113 @@ function renderCircleOfFifths(){
 }
 document.getElementById('semitone-chart').innerHTML = renderSemitoneChart();
 document.getElementById('circle-fifths').innerHTML = renderCircleOfFifths();
+
+/* ===== 音阶指型图 ===== */
+const scaleShapes = {
+  la: {
+    title: "la 指型（主音在 5 弦）", startFret: 2,
+    notes: [
+      {s:6,f:3,name:'G'},{s:6,f:5,name:'A'},{s:6,f:7,name:'B'},
+      {s:5,f:3,name:'C',root:true},{s:5,f:5,name:'D'},{s:5,f:7,name:'E'},
+      {s:4,f:2,name:'E'},{s:4,f:3,name:'F'},{s:4,f:5,name:'G'},{s:4,f:7,name:'A'},
+      {s:3,f:2,name:'A'},{s:3,f:4,name:'B'},{s:3,f:5,name:'C'},{s:3,f:7,name:'D'},
+      {s:2,f:3,name:'D'},{s:2,f:5,name:'E'},{s:2,f:6,name:'F'},{s:2,f:8,name:'G'},
+      {s:1,f:3,name:'G'},{s:1,f:5,name:'A'},{s:1,f:7,name:'B'},{s:1,f:8,name:'C'},
+    ]
+  },
+  mi: {
+    title: "mi 指型（主音在 6 弦）", startFret: 7,
+    notes: [
+      {s:6,f:8,name:'C',root:true},{s:6,f:10,name:'D'},{s:6,f:12,name:'E'},
+      {s:5,f:7,name:'E'},{s:5,f:8,name:'F'},{s:5,f:10,name:'G'},{s:5,f:12,name:'A'},
+      {s:4,f:7,name:'A'},{s:4,f:9,name:'B'},{s:4,f:10,name:'C'},
+      {s:3,f:7,name:'D'},{s:3,f:9,name:'E'},{s:3,f:10,name:'F'},{s:3,f:12,name:'G'},
+      {s:2,f:8,name:'G'},{s:2,f:10,name:'A'},{s:2,f:12,name:'B'},
+      {s:1,f:7,name:'B'},{s:1,f:8,name:'C'},{s:1,f:10,name:'D'},{s:1,f:12,name:'E'},
+    ]
+  }
+};
+function renderScaleShape(shape){
+  const data = scaleShapes[shape];
+  const start = data.startFret;
+  const fretCount = 7;
+  const strGap = 20, fretW = 46, leftPad = 56, topPad = 26;
+  const W = leftPad + fretCount*fretW + 18;
+  const H = topPad + 5*strGap + 30;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
+  for(let s=0;s<6;s++){
+    const y = topPad + s*strGap;
+    svg += `<line class="svg-line" x1="${leftPad}" y1="${y}" x2="${leftPad+fretCount*fretW}" y2="${y}" stroke-width="${s>=3?1.2:2}"/>`;
+  }
+  for(let f=0;f<=fretCount;f++){
+    const x = leftPad + f*fretW;
+    svg += `<line class="svg-fret" x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+5*strGap}" stroke-width="${f===0?4:1}"/>`;
+  }
+  for(let f=0;f<=fretCount;f++){
+    svg += `<text class="svg-pos" x="${leftPad+f*fretW-fretW/2}" y="${topPad+5*strGap+18}" font-size="10" text-anchor="middle">${start+f}</text>`;
+  }
+  data.notes.forEach(n=>{
+    const y = topPad + (n.s-1)*strGap;
+    const x = leftPad + (n.f - start + 0.5)*fretW;
+    if(n.root){
+      svg += `<circle cx="${x}" cy="${y}" r="11" fill="var(--green)"/>`;
+      svg += `<text x="${x}" y="${y+4}" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">${n.name}</text>`;
+    } else {
+      svg += `<circle cx="${x}" cy="${y}" r="8" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="1"/>`;
+      svg += `<text x="${x}" y="${y+3.5}" font-size="11" fill="var(--ink)" text-anchor="middle">${n.name}</text>`;
+    }
+  });
+  svg += `</svg>`;
+  return svg;
+}
+
+/* ===== CAGED 根音拼图 ===== */
+const cagedC = [
+  {s:2, f:1, shape:'C'},
+  {s:5, f:3, shape:'C·A'},
+  {s:3, f:5, shape:'A'},
+  {s:6, f:8, shape:'G'},
+  {s:1, f:8, shape:'G'},
+  {s:4, f:10, shape:'E'},
+  {s:3, f:10, shape:'D'},
+];
+function renderCagedMap(){
+  const start = 0, fretCount = 12;
+  const strGap = 20, fretW = 34, leftPad = 60, topPad = 26;
+  const W = leftPad + fretCount*fretW + 18;
+  const H = topPad + 5*strGap + 30;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg">`;
+  for(let s=0;s<6;s++){
+    const y = topPad + s*strGap;
+    svg += `<line class="svg-line" x1="${leftPad}" y1="${y}" x2="${leftPad+fretCount*fretW}" y2="${y}" stroke-width="${s>=3?1.2:2}"/>`;
+  }
+  for(let f=0;f<=fretCount;f++){
+    const x = leftPad + f*fretW;
+    svg += `<line class="svg-fret" x1="${x}" y1="${topPad}" x2="${x}" y2="${topPad+5*strGap}" stroke-width="${f===0?4:1}"/>`;
+  }
+  [3,5,7,9,12].forEach(f=>{
+    svg += `<text class="svg-pos" x="${leftPad+f*fretW-fretW/2}" y="${topPad+5*strGap+18}" font-size="10" text-anchor="middle">${f}</text>`;
+  });
+  cagedC.forEach(c=>{
+    const y = topPad + (c.s-1)*strGap;
+    const x = leftPad + (c.f - start + 0.5)*fretW;
+    svg += `<circle cx="${x}" cy="${y}" r="11" fill="var(--green)"/>`;
+    svg += `<text x="${x}" y="${y+4}" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">${c.shape}</text>`;
+  });
+  svg += `</svg>`;
+  return svg;
+}
+
+/* ===== 手指按位动画 ===== */
+function animateChord(el){
+  el.classList.remove('animating');
+  void el.offsetWidth;
+  el.classList.add('animating');
+}
+
+document.getElementById('scale-la').innerHTML = renderScaleShape('la');
+document.getElementById('scale-mi').innerHTML = renderScaleShape('mi');
+document.getElementById('caged-map').innerHTML = renderCagedMap();
 </script>
 </body>
 </html>
